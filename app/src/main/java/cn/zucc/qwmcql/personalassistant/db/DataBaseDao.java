@@ -28,6 +28,7 @@ public class DataBaseDao {
         if(dataBaseDao==null)
             dataBaseDao = new DataBaseDao(context);
         return dataBaseDao;
+
     }
 
     public void addIncomeCost(IncomeCostBean incomeCostBean) {
