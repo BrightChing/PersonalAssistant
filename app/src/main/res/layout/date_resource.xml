@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/dateResource">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp">
+
+        <TextView
+            android:id="@+id/dialogTitleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="日程标题"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/dialogTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_toRightOf="@+id/dialogTitleView"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/dialogDateView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialogTitleView"
+            android:layout_margin="16dp"
+            android:text="设定时间"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/dialogDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialogTitleView"
+            android:layout_margin="16dp"
+            android:layout_toRightOf="@+id/dialogDateView"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/dialogPostView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialogDateView"
+            android:layout_margin="16dp"
+            android:text="备注"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:id="@+id/dialogPost"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/dialogDateView"
+            android:layout_margin="16dp"
+            android:layout_toRightOf="@+id/dialogPostView"
+            android:textSize="14sp"
+            android:gravity="center"/>
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="@drawable/ic_room_black_24dp"
+            android:layout_below="@+id/dialogDate"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginEnd="16dp" />
+    </RelativeLayout>
+</LinearLayout>

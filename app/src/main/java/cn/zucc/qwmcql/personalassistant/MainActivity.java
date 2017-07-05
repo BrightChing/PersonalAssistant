@@ -186,9 +186,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             finish();
         }
         else if(id==R.id.nav_serach){
-//            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
-//            startActivity(intent);
-//            finish();
+            Intent intent = new Intent(MainActivity.this, SearchActivity.class);
+            startActivity(intent);
+            finish();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

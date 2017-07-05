@@ -110,7 +110,7 @@ public class DataBaseDao {
 
     public SchedulePlan searchSchedulePlanById(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.query("note", new String[]{"_id", "date", "title", "hour", "minutes",
+        Cursor cursor = db.query("plan", new String[]{"_id", "date", "title", "hour", "minutes",
                 "postscript"}, " _id = ?", new String[]{String.valueOf(id)}, null, null, "_id asc");
         SchedulePlan plan = null;
         if (cursor.moveToNext()) {
@@ -182,4 +182,25 @@ public class DataBaseDao {
         cur.close();
         return list;
     }
+
+    public ArrayList<SchedulePlan> searchByIndistinct(String title) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.query("plan", new String[]{"_id", "date", "title","hour","minutes","postscript"},
+                "title like '%"+title+"%'"+" or postscript like '%"+title+"%'",null, null, null, "_id asc");
+        ArrayList<SchedulePlan> list = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            SchedulePlan plan = new SchedulePlan();
+            plan.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            plan.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+            plan.setDate(cursor.getString(cursor.getColumnIndex("date")));
+
+            plan.setHour(cursor.getString(cursor.getColumnIndex("hour")));
+            plan.setMinutes(cursor.getString(cursor.getColumnIndex("minutes")));
+            plan.setPostScript(cursor.getString(cursor.getColumnIndex("postscript")));
+            list.add(plan);
+        }
+        db.close();
+        return list;
+    }
+
 }

@@ -168,16 +168,18 @@ public class FragmentSchedulePlan extends Fragment {
                 holder = new ListViewHolder();
                 convertView = mInflater.inflate(R.layout.list_item, null);
                 holder.txvName = (TextView) convertView.findViewById(R.id.txvName);
+                holder.subLine = (TextView) convertView.findViewById(R.id.subLine);
                 convertView.setTag(holder);
             } else {
                 holder = (ListViewHolder) convertView.getTag();
             }
-                holder.txvName.setText(noteDatas.get(position).getTitle());
+            holder.txvName.setText(noteDatas.get(position).getTitle());
+            holder.subLine.setVisibility(View.GONE);
             return convertView;
         }
 
         class ListViewHolder {
-            TextView txvName;
+            TextView txvName, subLine;
         }
     }
 

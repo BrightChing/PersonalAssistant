@@ -22,9 +22,9 @@ public class DBServer {
         return dataBaseDao.searchSchedulePlanById(id);
     }
 
-    public static void updatePlan(Context context, SchedulePlan note) {
+    public static void updatePlan(Context context, SchedulePlan plan) {
         DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
-        dataBaseDao.updateSchedulePlan(note);
+        dataBaseDao.updateSchedulePlan(plan);
     }
 
     public static void deletePlanById(Context context, int id) {
@@ -38,5 +38,9 @@ public class DBServer {
     public static void addNote(Context context, NoteBean note) {
         DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
         dataBaseDao.addNote(note);
+    }
+    public static ArrayList<SchedulePlan> searchByIndistinct(Context context,String plan){
+        DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
+        return dataBaseDao.searchByIndistinct(plan);
     }
 }
