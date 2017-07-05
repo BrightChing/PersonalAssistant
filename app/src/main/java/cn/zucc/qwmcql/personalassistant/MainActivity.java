@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private void initView() {
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mViewPager = (ViewPager) findViewById(R.id.viewPager);
-        mFragments = new ArrayList<Fragment>();
+        mFragments = new ArrayList<>();
         mFragments.add(new FragmentNoteList());
         mFragments.add(new FragmentSchedulePlan());
         mFragments.add(new FragmentIncomeCost());
@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
                 startActivity(intent);
-                finish();
+//                finish();
             }
         });
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -126,11 +126,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
     }
 
     private Toolbar.OnMenuItemClickListener onMenuItemClick = new Toolbar.OnMenuItemClickListener() {
@@ -184,8 +185,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);
             finish();
-        }
-        else if(id==R.id.nav_serach){
+        } else if (id == R.id.nav_serach) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             finish();

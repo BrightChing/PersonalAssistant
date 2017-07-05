@@ -4,6 +4,8 @@ package cn.zucc.qwmcql.personalassistant;
  * Created by My PC on 2017/5/12.
  */
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import cn.zucc.qwmcql.personalassistant.bean.NoteBean;
 import cn.zucc.qwmcql.personalassistant.db.DataBaseHelper;
 
 public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItemOnclickListener {
@@ -24,6 +27,7 @@ public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItem
     private Cursor cursor;
     private SQLiteDatabase dbReader;
     private CardsAdapter cardsAdapter;
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -31,8 +35,9 @@ public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItem
                 container, false);
         mListView = (ListView) rootView.findViewById(R.id.cards_list);
         mListView.setNestedScrollingEnabled(true);
-        dbReader =  DataBaseHelper.getInstance(this.getActivity()).getReadableDatabase();
+        dbReader = DataBaseHelper.getInstance(getContext()).getReadableDatabase();
         selectDB();
+        cardsAdapter = new CardsAdapter(getContext(), cursor);
         cardsAdapter.setOnInnerItemOnClickListener(this);
         mListView.setAdapter(cardsAdapter);
         return rootView;
@@ -40,7 +45,6 @@ public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItem
 
     public void selectDB() {
         cursor = dbReader.query("notes", null, null, null, null, null, null);
-        cardsAdapter = new CardsAdapter(this.getActivity(), cursor);
     }
 
     @Override
@@ -50,22 +54,18 @@ public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItem
         switch (v.getId()) {
             case R.id.card:
                 cursor.moveToPosition(position);
-                Intent intent = new Intent(this.getActivity(), NoteActivity.class);
-
-                intent.putExtra("_id", cursor.getInt(cursor.getColumnIndex("_id")));
-                intent.putExtra("content", cursor.getString(cursor.getColumnIndex("content")));
-                intent.putExtra("time", cursor.getString(cursor.getColumnIndex("time")));
+                Activity mActivity = getActivity();
+                Intent intent = new Intent(mActivity, NoteActivity.class);
+                NoteBean note = new NoteBean();
+                note.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+                note.setContent(cursor.getString(cursor.getColumnIndex("content")));
+                note.setTime(cursor.getString(cursor.getColumnIndex("time")));
+                intent.putExtra("note", note);
                 startActivity(intent);
-                getActivity().finish();
+                mActivity.finish();
                 break;
             default:
                 break;
         }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // selectDB();
     }
 }

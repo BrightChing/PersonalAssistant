@@ -4,7 +4,6 @@ package cn.zucc.qwmcql.personalassistant;
  * Created by My PC on 2017/5/17.
  */
 
-import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
@@ -23,6 +22,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import cn.zucc.qwmcql.personalassistant.bean.NoteBean;
+import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.db.DataBaseHelper;
 
 public class NoteActivity extends AppCompatActivity {
@@ -30,6 +31,7 @@ public class NoteActivity extends AppCompatActivity {
     private TextView t_tv;
     private LinearLayout linearLayout;
     private SQLiteDatabase dbWriter;
+    private NoteBean note;
     CoordinatorLayout container;
 
     @Override
@@ -57,41 +59,38 @@ public class NoteActivity extends AppCompatActivity {
         });
 
         dbWriter = DataBaseHelper.getInstance(this).getWritableDatabase();
-        s_tv = (TextView) findViewById(R.id.textview2);
+        s_tv = (TextView) findViewById(R.id.content_text);
         t_tv = (TextView) findViewById(R.id.textView1);
         linearLayout = (LinearLayout) findViewById(R.id.lay1);
-        s_tv.setText(getIntent().getStringExtra("content"));
-        t_tv.setText(getIntent().getStringExtra("time"));
+        note = (NoteBean) getIntent().getSerializableExtra("note");
+        s_tv.setText(note.getContent());
+        t_tv.setText(note.getTime());
         linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                editdialog();
+                editDialog();
                 return true;
             }
         });
     }
 
-    private void deleteDate() {
-        dbWriter.delete("notes", "_id=" + getIntent().getIntExtra("_id", 0), null);
-    }
-
     public void showDialog() {
         final BottomSheetDialog dialog = new BottomSheetDialog(NoteActivity.this);
-        View dialogView = LayoutInflater.from(NoteActivity.this)
-                .inflate(R.layout.bottomsheetdialog, null);
-        TextView tvedit = (TextView) dialogView.findViewById(R.id.tv_edit);
-        TextView tvdelete = (TextView) dialogView.findViewById(R.id.tv_delete);
+        View dialogView = LayoutInflater.from(NoteActivity.this).inflate(R.layout.bottomsheetdialog, null);
+        TextView tvEdit = (TextView) dialogView.findViewById(R.id.tv_edit);
+        TextView tvDelete = (TextView) dialogView.findViewById(R.id.tv_delete);
         TextView tvCancel = (TextView) dialogView.findViewById(R.id.tv_cancel);
-        tvdelete.setOnClickListener(new View.OnClickListener() {
+        tvDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(NoteActivity.this);
+                android.support.v7.app.AlertDialog.Builder builder =
+                        new android.support.v7.app.AlertDialog.Builder(NoteActivity.this);
                 builder.setTitle("删除提示");
                 builder.setMessage("真的要删除吗？");
                 builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteDate();
+                        DBServer.deleteNote(NoteActivity.this, note.getId());//删除数据
                         Snackbar.make(container, "删除成功", Snackbar.LENGTH_LONG).show();
                         new Thread(new Runnable() {
                             @Override
@@ -115,16 +114,14 @@ public class NoteActivity extends AppCompatActivity {
 
                     }
                 });
-
                 builder.show();
                 dialog.dismiss();
             }
         });
-        tvedit.setOnClickListener(new View.OnClickListener() {
-
+        tvEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                editdialog();
+                editDialog();
                 dialog.dismiss();
             }
         });
@@ -149,7 +146,7 @@ public class NoteActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-    public void editdialog() {
+    public void editDialog() {
         LayoutInflater inflater = getLayoutInflater();
         View dialog1 = inflater.inflate(R.layout.editdialog, (ViewGroup) findViewById(R.id.dialog));
         final EditText editText = (EditText) dialog1.findViewById(R.id.et);
@@ -160,9 +157,8 @@ public class NoteActivity extends AppCompatActivity {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                ContentValues cv = new ContentValues();
-                cv.put("", editText.getText().toString());
-                dbWriter.update("", cv, "_id=?", new String[]{String.valueOf(getIntent().getIntExtra("_id",0))});
+                note.setContent(editText.getText().toString());
+                DBServer.updataNote(NoteActivity.this, note);//更新数据
                 Snackbar.make(container, "修改成功", Snackbar.LENGTH_LONG).show();
                 new Thread(new Runnable() {
                     @Override

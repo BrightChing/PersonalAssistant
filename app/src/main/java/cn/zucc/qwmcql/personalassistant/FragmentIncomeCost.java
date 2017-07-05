@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.bean.IncomeCostBean;
+import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.db.DataBaseDao;
 import cn.zucc.qwmcql.personalassistant.util.RecyclerViewAdapter;
 
@@ -26,7 +27,6 @@ public class FragmentIncomeCost extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerViewAdapter mRecyclerViewAdapter;
     public List<IncomeCostBean> mList;
-    SimpleDateFormat sdf;
 
     @Nullable
     @Override
@@ -65,7 +65,7 @@ public class FragmentIncomeCost extends Fragment {
             @Override
             public void onItemLongClick(RecyclerView parent, View view, int position) {
                 IncomeCostBean incomeCostBean = mList.get(position);
-                DataBaseDao.getInstance(getContext()).deleteIncomeCost(incomeCostBean.getId());
+                DBServer.deleteIncomeCost(getContext(), incomeCostBean.getId());
                 mList.remove(position);
                 mRecyclerViewAdapter.notifyItemRemoved(position);
             }
@@ -92,16 +92,19 @@ public class FragmentIncomeCost extends Fragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         IncomeCostBean incomeCostBean = new IncomeCostBean();
-                        incomeCostBean.setIncomeCostDate(datePicker.getYear() + "-" +
-                                (datePicker.getMonth() + 1) + "-" + datePicker.getDayOfMonth());
+                        int n = datePicker.getMonth() + 1;
+                        String m = n > 9 ? n + "" : "0" + n;
+                        n = datePicker.getDayOfMonth();
+                        String d = n > 9 ? n + "" : "0" + n;
+                        incomeCostBean.setIncomeCostDate(datePicker.getYear() + "-" + m + "-" + d);
                         incomeCostBean.setSource(source.getText().toString());
                         if (money == null || "".equals(money.getText().toString()))
                             incomeCostBean.setMoney(Integer.parseInt("0"));
                         else
                             incomeCostBean.setMoney(Float.parseFloat(money.getText().toString()));
-                        DataBaseDao dataBaseDao = DataBaseDao.getInstance(getContext());
-                        dataBaseDao.addIncomeCost(incomeCostBean);
-                        mList.add(incomeCostBean);
+                        DBServer.addIncomeCost(getContext(), incomeCostBean);
+                        incomeCostBean.setId(DBServer.getIncomeCostId(getContext()));
+                        mList.add(getPositon(incomeCostBean.getIncomeCostDate()), incomeCostBean);
                         mRecyclerViewAdapter.notifyDataSetChanged();
                     }
                 })
@@ -114,7 +117,15 @@ public class FragmentIncomeCost extends Fragment {
     }
 
     private void initData() {
-        DataBaseDao dataBaseDao = DataBaseDao.getInstance(getContext());
-        mList = dataBaseDao.searchIncomeCost();
+        mList = DBServer.searchIncomeCost(getContext());
+    }
+
+    private int getPositon(String str) {
+        int n = mList.size();
+        for (int i = 0; i < n; i++) {
+            if (mList.get(i).getIncomeCostDate().compareTo(str) > 0)
+                return i;
+        }
+        return n;
     }
 }

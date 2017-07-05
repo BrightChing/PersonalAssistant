@@ -18,14 +18,15 @@ import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
  */
 
 public class DataBaseDao {
-    private  DataBaseHelper helper;
+    private DataBaseHelper helper;
     private static DataBaseDao dataBaseDao;
-   private DataBaseDao (Context context)
-   {
-       this.helper = DataBaseHelper.getInstance(context);
-   }
+
+    private DataBaseDao(Context context) {
+        this.helper = DataBaseHelper.getInstance(context);
+    }
+
     public static DataBaseDao getInstance(Context context) {
-        if(dataBaseDao==null)
+        if (dataBaseDao == null)
             dataBaseDao = new DataBaseDao(context);
         return dataBaseDao;
 
@@ -154,7 +155,7 @@ public class DataBaseDao {
 
     public void deleteNote(int id) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        db.delete("notes", "id = ?", new String[]{String.valueOf(id)});
+        db.delete("notes", "_id = ?", new String[]{String.valueOf(id)});
         db.close();
     }
 
@@ -185,22 +186,28 @@ public class DataBaseDao {
 
     public ArrayList<SchedulePlan> searchByIndistinct(String title) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.query("plan", new String[]{"_id", "date", "title","hour","minutes","postscript"},
-                "title like '%"+title+"%'"+" or postscript like '%"+title+"%'",null, null, null, "_id asc");
+        Cursor cursor = db.query("plan", new String[]{"_id", "date", "title", "hour", "minutes", "postscript"},
+                "title like '%" + title + "%'" + " or postscript like '%" + title + "%'", null, null, null, "_id asc");
         ArrayList<SchedulePlan> list = new ArrayList<>();
         while (cursor.moveToNext()) {
             SchedulePlan plan = new SchedulePlan();
             plan.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             plan.setTitle(cursor.getString(cursor.getColumnIndex("title")));
             plan.setDate(cursor.getString(cursor.getColumnIndex("date")));
-
             plan.setHour(cursor.getString(cursor.getColumnIndex("hour")));
             plan.setMinutes(cursor.getString(cursor.getColumnIndex("minutes")));
             plan.setPostScript(cursor.getString(cursor.getColumnIndex("postscript")));
             list.add(plan);
         }
         db.close();
+        cursor.close();
         return list;
     }
-
+    public int getIncomeCostId(){
+       String sql="select * from cost order by _id desc limit 0,1";
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql,null);
+        cursor.moveToNext();
+        return cursor.getInt(cursor.getColumnIndex("_id"));
+    }
 }
