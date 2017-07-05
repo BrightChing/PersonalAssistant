@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">记录人</string>
+    <string name="action_settings">设置</string>
+    <string name="tab_three">/</string>
+    <string name="title_activity_note">笔记</string>
+    <string name="button_save">保存</string>
+    <string name="button_cancel">取消</string>
+    <string name="create_time">创建日期</string>
+    <string name="day_mode">夜间模式</string>
+    <string name="sheet_edit">修改</string>
+    <string name="sheet_delete">删除</string>
+    <string name="sheet_cancel">取消</string>
+    <string name="about_us">关于软件</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_drawer">Drawer</string>
+    <string name="empty">请输入内容</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="date_title">标题</string>
+    <string name="date_time">时间</string>
+    <string name="postscript">备注</string>
+    <string name="hint">重复提醒</string>
+</resources>
