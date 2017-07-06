@@ -28,6 +28,7 @@ public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItem
     private SQLiteDatabase dbReader;
     private CardsAdapter cardsAdapter;
 
+
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

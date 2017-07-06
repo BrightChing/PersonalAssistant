@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
@@ -35,7 +36,7 @@ public class FragmentSchedulePlan extends Fragment {
     CalendarView calendarView = null;
     ListView noteListView;
     String planDate = "";
-    ArrayList<SchedulePlan> noteDatas = new ArrayList<>();
+    List<SchedulePlan> noteDatas = new ArrayList<>();
     TextView txvTip = null;
     RelativeLayout rm;
     long date;
