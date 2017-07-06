@@ -136,12 +136,15 @@ public class DataBaseDao {
     public void updateSchedulePlan(SchedulePlan plan) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
+        
         cv.put("title", plan.getTitle());
         cv.put("date", plan.getDate());
         cv.put("hour", plan.getHour());
-        cv.put("minutes", plan.getHour());
+        cv.put("minutes", plan.getMinutes());
         cv.put("postscript", plan.getPostScript());
+
         db.update("plan", cv, "_id=?", new String[]{String.valueOf(plan.getId())});
+        db.close();
     }
 
     public void addNote(NoteBean note) {

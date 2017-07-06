@@ -12,9 +12,9 @@ import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
 public class DBServer {
 
     // 日程规划数据操作
-    public static void addPlan(Context context, SchedulePlan note) {
+    public static void addPlan(Context context, SchedulePlan plan) {
         DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
-        dataBaseDao.addSchedulePlan(note);
+        dataBaseDao.addSchedulePlan(plan);
     }
 
     public static void deletePlanById(Context context, int id) {

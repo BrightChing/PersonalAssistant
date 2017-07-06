@@ -71,7 +71,6 @@ public class FragmentSchedulePlan extends Fragment {
             }
         });
         registerForContextMenu(noteListView);
-
         noteListView.setOnCreateContextMenuListener(new View.OnCreateContextMenuListener() {
             @Override
             public void onCreateContextMenu(ContextMenu contextMenu, View view, ContextMenu.ContextMenuInfo contextMenuInfo) {
