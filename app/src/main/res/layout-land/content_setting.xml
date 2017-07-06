@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SettingActivity"
+    android:orientation="vertical"
+    android:weightSum="1">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        tools:layout_editor_absoluteY="27dp"
+        tools:layout_editor_absoluteX="16dp"
+        android:id="@+id/view"
+        ></View>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        tools:layout_editor_absoluteY="0dp"
+        tools:layout_editor_absoluteX="8dp"
+        android:layout_below="@+id/view"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="16dp"
+            android:text="@string/day_mode"
+            android:paddingLeft="56dp"
+            android:layout_gravity="center"
+            android:id="@+id/control" />
+
+        <Switch
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:gravity="center"
+            android:paddingRight="48dp"
+            android:layout_gravity="center"
+            android:id="@+id/sw1" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD" />
+
+
+    <RelativeLayout
+        android:id="@+id/re2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/lay2"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:layout_above="@+id/imageView2"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:paddingLeft="56dp"
+                android:text="@string/about_us"
+                android:textSize="16dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/bookshelf"
+            android:id="@+id/imageView2"
+            android:layout_marginRight="56dp"
+            android:layout_marginBottom="16dp"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/textView5"
+            android:layout_toStartOf="@+id/textView5" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="128dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="记录人\n版本：1.0"
+            android:textSize="16sp"
+            android:layout_below="@+id/lay2"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:layout_width="128dp"
+            android:layout_height="48dp"
+            android:gravity="center"
+            android:text="Powered By JohnChen"
+            android:textSize="12sp"
+            android:id="@+id/textView2"
+            android:layout_marginLeft="51dp"
+            android:layout_marginStart="51dp"
+            android:layout_below="@+id/lay2"
+            android:layout_toRightOf="@+id/textView5"
+            android:layout_toEndOf="@+id/textView5" />
+
+        <LinearLayout
+            android:id="@+id/lay3"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_below="@+id/linearLayout"
+           >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:paddingLeft="56dp"
+                android:text="帮助"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/lay4"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="0dp"
+            android:layout_below="@+id/lay3"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="0.5"
+                android:paddingLeft="56dp"
+                android:text="设置加密密码"
+                android:textSize="16dp" />
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/lay3"
+            android:background="#BDBDBD"
+            android:id="@+id/view2" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_above="@+id/lay2"
+            android:background="#BDBDBD"
+            android:id="@+id/view4" />
+    </RelativeLayout>
+</LinearLayout>
