@@ -28,6 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="输入金额"
+            android:maxLength="8"
             android:inputType="numberSigned|numberDecimal"
             android:imeOptions="actionUnspecified"
             android:maxLines="1" />

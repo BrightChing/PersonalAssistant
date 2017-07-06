@@ -22,9 +22,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimeZone;
 
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
@@ -53,16 +51,14 @@ public class EditPlanActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_edit_note);
         initView();
-        uiType= getIntent().getStringExtra("uiType");
+        uiType = getIntent().getStringExtra("uiType");
         switch (uiType) {
             case "newPlan":
                 showNewNoteUI();
+                currPlan=new SchedulePlan();
                 break;
             case "showPlan":
                 showTextNoteUI();
-                break;
-            case "editPlan":
-                showEditNoteUI();
                 break;
             default:
                 break;
@@ -76,14 +72,11 @@ public class EditPlanActivity extends Activity {
         etNoteTitle.setEnabled(false);
         postScript.setEnabled(false);
         postScript.setText(currPlan.getPostScript());
-
         timePicker.setVisibility(View.GONE);
         if (Integer.valueOf(currPlan.getMinutes()).intValue() < 10) {
             timeShower.setText(currPlan.getHour() + ":0" + currPlan.getMinutes());
         } else
             timeShower.setText(currPlan.getHour() + ":" + currPlan.getMinutes());
-
-
         btnSave.setVisibility(View.GONE);
         btnDelete.setVisibility(View.VISIBLE);
         btnEdit.setVisibility(View.VISIBLE);
@@ -116,20 +109,13 @@ public class EditPlanActivity extends Activity {
         btnSave.setVisibility(View.VISIBLE);
         btnDelete.setVisibility(View.GONE);
         btnEdit.setVisibility(View.GONE);
-        timeShower.setVisibility(View.GONE);
-        currPlan = (SchedulePlan) getIntent().getSerializableExtra("plan");
-        etNoteTitle.setText(currPlan.getTitle());
-        postScript.setText(currPlan.getPostScript());
         timePicker.setCurrentHour(Integer.valueOf(currPlan.getHour()));
         timePicker.setCurrentMinute(Integer.valueOf(currPlan.getMinutes()));
         timePicker.setIs24HourView(Boolean.TRUE);
-        timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-            @Override
-            public void onTimeChanged(TimePicker timePicker, int hour, int minutes) {
-                EditPlanActivity.this.hour = hour;
-                EditPlanActivity.this.minutes = minutes;
-            }
-        });
+        timePicker.setVisibility(View.VISIBLE);
+        etNoteTitle.setEnabled(true);
+        postScript.setEnabled(true);
+        checkBox.setEnabled(true);
     }
 
 
@@ -158,11 +144,7 @@ public class EditPlanActivity extends Activity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                if (uiType.equals("newPlan")) {
-                    saveNewPlan();
-                } else if (uiType.equals("editPlan")) {
-                    saveEditPlan();
-                }
+                    savePlan();
             }
         });
 
@@ -176,35 +158,27 @@ public class EditPlanActivity extends Activity {
         btnEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                editPlan(currPlan);
+                showEditNoteUI();
             }
         });
     }
-
-
-    private void editPlan(SchedulePlan plan) {
-        Intent intent = new Intent(EditPlanActivity.this, EditPlanActivity.class);
-        intent.putExtra("uiType", "editPlan");
-        intent.putExtra("plan", plan);
-        startActivity(intent);
-        this.finish();
-    }
-
-
-    private void saveNewPlan() {
+    
+    private void savePlan() {
         planDate = getIntent().getStringExtra("planDate");
-        planTitle = etNoteTitle.getText().toString().trim();
+        planTitle = etNoteTitle.getText().toString();
         planHour = timePicker.getCurrentHour().toString();
         planMinutes = timePicker.getCurrentMinute().toString();
         planPost = postScript.getText().toString();
         if (!planTitle.equals("")) {
-            currPlan = new SchedulePlan();
             currPlan.setTitle(planTitle);
-            currPlan.setDate(planDate);
             currPlan.setHour(planHour);
             currPlan.setMinutes(planMinutes);
             currPlan.setPostScript(planPost);
-            DBServer.addPlan(getApplicationContext(), currPlan);
+            if(planDate!=null&&!"".equals(planDate))
+            {
+                currPlan.setDate(planDate);
+            DBServer.addPlan(this, currPlan);}
+            else DBServer.updatePlan(this,currPlan);
             AlarmSetting();
             EditPlanActivity.this.finish();
         } else {
@@ -217,28 +191,7 @@ public class EditPlanActivity extends Activity {
         cancelAlarm();
         EditPlanActivity.this.finish();
     }
-
-    private void saveEditPlan() {
-
-        currPlan = (SchedulePlan) getIntent().getSerializableExtra("plan");
-        planTitle = etNoteTitle.getText().toString().trim();
-        planHour = timePicker.getCurrentHour().toString();
-        planMinutes = timePicker.getCurrentMinute().toString();
-        planPost = postScript.getText().toString();
-        if (!planTitle.equals("")) {
-//            currPlan = new SchedulePlan();
-            currPlan.setTitle(planTitle);
-            currPlan.setHour(planHour);
-            currPlan.setMinutes(planMinutes);
-            currPlan.setPostScript(planPost);
-            DBServer.updatePlan(getApplicationContext(), currPlan);
-            AlarmSetting();
-            EditPlanActivity.this.finish();
-        } else {
-            Toast.makeText(getApplicationContext(), R.string.empty, Toast.LENGTH_SHORT).show();
-        }
-    }
-
+    
     private void AlarmSetting() {
         Intent intent = new Intent(EditPlanActivity.this, AlarmReceiver.class);
         intent.putExtra("planTitle", currPlan.getTitle());
@@ -256,25 +209,24 @@ public class EditPlanActivity extends Activity {
         // 选择的每天定时时间
         long selectTime = calendar.getTimeInMillis();
         // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
-            if (systemTime > selectTime) {
-                Toast.makeText(EditPlanActivity.this, "设置的时间小于当前时间", Toast.LENGTH_SHORT).show();
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-                selectTime = calendar.getTimeInMillis();
-            }
-            // 计算现在时间到设定时间的时间差
-            long time = selectTime - systemTime;
-            firstTime += time;
-            // 进行闹铃注册
-            AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
-            if (checkBox.isChecked()) {
-                manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                        firstTime, 5 * 1000, sender);
-                Toast.makeText(EditPlanActivity.this, "设置重复闹铃成功! ", Toast.LENGTH_LONG).show();
-            } else {
-                manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, sender);
-                Toast.makeText(EditPlanActivity.this, "设置闹铃成功! ", Toast.LENGTH_LONG).show();
-            }
-
+        if (systemTime > selectTime) {
+            Toast.makeText(EditPlanActivity.this, "设置的时间小于当前时间", Toast.LENGTH_SHORT).show();
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            selectTime = calendar.getTimeInMillis();
+        }
+        // 计算现在时间到设定时间的时间差
+        long time = selectTime - systemTime;
+        firstTime += time;
+        // 进行闹铃注册
+        AlarmManager manager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        if (checkBox.isChecked()) {
+            manager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    firstTime, 5 * 1000, sender);
+            Toast.makeText(EditPlanActivity.this, "设置重复闹铃成功! ", Toast.LENGTH_LONG).show();
+        } else {
+            manager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, sender);
+            Toast.makeText(EditPlanActivity.this, "设置闹铃成功! ", Toast.LENGTH_LONG).show();
+        }
     }
 
     public void cancelAlarm() {
@@ -284,12 +236,5 @@ public class EditPlanActivity extends Activity {
         // 取消闹铃
         AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
         am.cancel(sender);
-    }
-
-    public String getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("yyy-MM-dd");
-        Date curDate = new Date();
-        String str = format.format(curDate);
-        return str;
     }
 }

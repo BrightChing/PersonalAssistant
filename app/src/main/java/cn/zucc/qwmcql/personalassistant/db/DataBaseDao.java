@@ -48,7 +48,7 @@ public class DataBaseDao {
         cv.put("money", incomeCostBean.getMoney());
         cv.put("incomeCostDate", incomeCostBean.getIncomeCostDate());
         cv.put("source", incomeCostBean.getSource());
-        db.update("cost", cv, "id = ?", new String[]{String.valueOf(incomeCostBean.getId())});
+        db.update("cost", cv, "_id = ?", new String[]{String.valueOf(incomeCostBean.getId())});
         db.close();
     }
 
@@ -92,9 +92,7 @@ public class DataBaseDao {
         Cursor cursor = db.query("plan", new String[]{"_id", "date", "title", "hour", "minutes", "postscript"},
                 " date = ?", new String[]{date}, null, null, "_id asc");
         ArrayList<SchedulePlan> list = new ArrayList<>();
-        Log.e("date", "db noteDate = " + date);
         while (cursor.moveToNext()) {
-            Log.e("date", "db new SchedulePlan() = ");
             SchedulePlan plan = new SchedulePlan();
             plan.setId(cursor.getInt(cursor.getColumnIndex("_id")));
             plan.setTitle(cursor.getString(cursor.getColumnIndex("title")));
@@ -136,14 +134,13 @@ public class DataBaseDao {
     public void updateSchedulePlan(SchedulePlan plan) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
-        
         cv.put("title", plan.getTitle());
         cv.put("date", plan.getDate());
         cv.put("hour", plan.getHour());
         cv.put("minutes", plan.getMinutes());
         cv.put("postscript", plan.getPostScript());
-
-        db.update("plan", cv, "_id=?", new String[]{String.valueOf(plan.getId())});
+        db.update("plan", cv, "_id = ?", new String[]{String.valueOf(plan.getId())});
+        Log.e("time",plan.getId()+" "+plan.getHour()+":"+plan.getMinutes());
         db.close();
     }
 
