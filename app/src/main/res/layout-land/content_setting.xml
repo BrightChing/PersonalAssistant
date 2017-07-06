@@ -115,7 +115,6 @@
             android:id="@+id/lay3"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_below="@+id/linearLayout"
            >
 
             <TextView

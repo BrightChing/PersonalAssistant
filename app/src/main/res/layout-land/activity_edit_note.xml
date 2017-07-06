@@ -52,7 +52,7 @@
                 android:id="@+id/titleLiner"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/imb2">
+               >
                 <TextView
                     android:id="@+id/datetitle"
                     android:layout_width="wrap_content"
