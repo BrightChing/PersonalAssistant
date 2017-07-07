@@ -10,7 +10,6 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -27,7 +26,7 @@ import java.util.TimeZone;
 
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
-import cn.zucc.qwmcql.personalassistant.alarmReceive.*;
+import cn.zucc.qwmcql.personalassistant.alarm.*;
 
 public class EditPlanActivity extends Activity {
 

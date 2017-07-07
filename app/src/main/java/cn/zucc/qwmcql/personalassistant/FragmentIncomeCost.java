@@ -3,6 +3,8 @@ package cn.zucc.qwmcql.personalassistant;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomSheetDialog;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,6 +27,7 @@ public class FragmentIncomeCost extends Fragment {
     RecyclerView mRecyclerView;
     RecyclerViewAdapter mRecyclerViewAdapter;
     public List<IncomeCostBean> mList;
+    private FloatingActionButton fab;
 
     @Nullable
     @Override
@@ -45,18 +48,19 @@ public class FragmentIncomeCost extends Fragment {
                 holder.setText(R.id.income_cost_date, incomeCostBean.getIncomeCostDate());
             }
         };
-        addIncomeCostBtn = (ImageButton) rootView.findViewById(R.id.addIncomeCostBtn);
-        addIncomeCostBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                incomeCostDialog("添加收支",null,0);
-            }
-        });
+//        addIncomeCostBtn = (ImageButton) rootView.findViewById(R.id.addIncomeCostBtn);
+//        addIncomeCostBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                incomeCostDialog("添加收支", null, 0);
+//            }
+//        });
+
         //设置recycleView监听
         mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView parent, View view, int position) {
-               incomeCostDialog("修改",mList.get(position),position);
+                incomeCostDialog("修改", mList.get(position), position);
             }
         });
         mRecyclerViewAdapter.setOnItemLongClickListener(new RecyclerViewAdapter.OnItemLongClickListener() {
@@ -70,6 +74,17 @@ public class FragmentIncomeCost extends Fragment {
         });
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         return rootView;
+    }
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        fab= (FloatingActionButton) getActivity().findViewById(R.id.fab_incomeCost);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showBottomSheetDialog();
+            }
+        });
     }
 
     /**
@@ -88,7 +103,7 @@ public class FragmentIncomeCost extends Fragment {
             money.setText(cost.getMoney() + "");
             source.setText(cost.getSource());
             String[] str = cost.getIncomeCostDate().split("-");
-           datePicker.updateDate(Integer.valueOf(str[0]),Integer.valueOf(str[1]),Integer.valueOf(str[2]));
+            datePicker.updateDate(Integer.valueOf(str[0]), Integer.valueOf(str[1]), Integer.valueOf(str[2]));
         }
         builder.setView(viewDialog)
                 .setTitle(title)
@@ -106,11 +121,11 @@ public class FragmentIncomeCost extends Fragment {
                             incomeCostBean.setMoney(Integer.parseInt("0"));
                         else
                             incomeCostBean.setMoney(Float.parseFloat(money.getText().toString()));
-                        if(cost==null) {
+                        if (cost == null) {
                             DBServer.addIncomeCost(getContext(), incomeCostBean);
                             incomeCostBean.setId(DBServer.getIncomeCostId(getContext()));
-                            mList.add(getPositon(incomeCostBean.getIncomeCostDate()), incomeCostBean);
-                        }else{
+                            mList.add(getPosition(incomeCostBean.getIncomeCostDate()), incomeCostBean);
+                        } else {
                             DBServer.updataIncomeCost(getContext(), incomeCostBean);
                             incomeCostBean.setId(DBServer.getIncomeCostId(getContext()));
                             mList.set(position, incomeCostBean);
@@ -126,11 +141,49 @@ public class FragmentIncomeCost extends Fragment {
                 .show();
     }
 
+    private void chartDialog(String title) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        LayoutInflater inflater = getActivity().getLayoutInflater();
+        View viewDialog = inflater.inflate(R.layout.chart_dialog, null);
+        builder.setTitle(title).setView(viewDialog).create().show();
+    }
+
+    public void showBottomSheetDialog() {
+        final BottomSheetDialog dialog = new BottomSheetDialog(getActivity());
+        View dialogView = LayoutInflater.from(getContext()).inflate(R.layout.bottomsheet_dialog_cost, null);
+        TextView tvAdd = (TextView) dialogView.findViewById(R.id.tv_add);
+        TextView tvChart = (TextView) dialogView.findViewById(R.id.tv_chart);
+        TextView tvCancel = (TextView) dialogView.findViewById(R.id.tv_cancel);
+        tvChart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chartDialog("图表");
+            }
+        });
+        tvAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                incomeCostDialog("添加收支", null, 0);
+                dialog.dismiss();
+            }
+        });
+
+        tvCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.setContentView(dialogView);
+        dialog.show();
+    }
+
     private void initData() {
         mList = DBServer.searchIncomeCost(getContext());
     }
 
-    private int getPositon(String str) {
+    //查找插入数据在列表中的位置
+    private int getPosition(String str) {
         int n = mList.size();
         for (int i = 0; i < n; i++) {
             if (mList.get(i).getIncomeCostDate().compareTo(str) > 0)

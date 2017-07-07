@@ -37,11 +37,22 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_main"
+        android:id="@+id/fab_note"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
+        app:layout_behavior=".anime.ScrollAwareFABBehaviorDepend"
+        app:srcCompat="@drawable/ic_action_add" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_incomeCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:visibility="gone"
+        app:layout_behavior=".anime.ScrollAwareFABBehaviorDepend"
         app:srcCompat="@drawable/ic_action_add"
-        app:layout_behavior=".anime.ScrollAwareFABBehaviorDepend" />
+        />
 </android.support.design.widget.CoordinatorLayout>

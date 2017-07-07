@@ -1,4 +1,4 @@
-package cn.zucc.qwmcql.personalassistant.alarmReceive;
+package cn.zucc.qwmcql.personalassistant.alarm;
 
 import android.app.Notification;
 import android.app.NotificationManager;

@@ -6,7 +6,6 @@ package cn.zucc.qwmcql.personalassistant;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
@@ -24,13 +23,11 @@ import android.widget.TextView;
 
 import cn.zucc.qwmcql.personalassistant.bean.NoteBean;
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
-import cn.zucc.qwmcql.personalassistant.db.DataBaseHelper;
 
 public class NoteActivity extends AppCompatActivity {
     private TextView s_tv;
     private TextView t_tv;
     private LinearLayout linearLayout;
-    private SQLiteDatabase dbWriter;
     private NoteBean note;
     CoordinatorLayout container;
 
@@ -58,7 +55,6 @@ public class NoteActivity extends AppCompatActivity {
             }
         });
 
-        dbWriter = DataBaseHelper.getInstance(this).getWritableDatabase();
         s_tv = (TextView) findViewById(R.id.content_text);
         t_tv = (TextView) findViewById(R.id.textView1);
         linearLayout = (LinearLayout) findViewById(R.id.lay1);
@@ -76,7 +72,7 @@ public class NoteActivity extends AppCompatActivity {
 
     public void showDialog() {
         final BottomSheetDialog dialog = new BottomSheetDialog(NoteActivity.this);
-        View dialogView = LayoutInflater.from(NoteActivity.this).inflate(R.layout.bottomsheetdialog, null);
+        View dialogView = LayoutInflater.from(NoteActivity.this).inflate(R.layout.bottomsheet_dialog_note, null);
         TextView tvEdit = (TextView) dialogView.findViewById(R.id.tv_edit);
         TextView tvDelete = (TextView) dialogView.findViewById(R.id.tv_delete);
         TextView tvCancel = (TextView) dialogView.findViewById(R.id.tv_cancel);

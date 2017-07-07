@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String[] mTitle = new String[]{"笔记列表", "日程规划", "收支管理"};
     private List<Fragment> mFragments;
     private long exitTime = 0;
+    private FloatingActionButton fabNote;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         });
         mTabLayout.setupWithViewPager(mViewPager);
-        final FloatingActionButton fabMain = (FloatingActionButton) findViewById(R.id.fab_main);
-        fabMain.setOnClickListener(new View.OnClickListener() {
+        fabNote = (FloatingActionButton) findViewById(R.id.fab_note);
+        fabNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
@@ -93,13 +94,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                finish();
             }
         });
+        final FloatingActionButton fab= (FloatingActionButton) findViewById(R.id.fab_incomeCost);
+
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageSelected(int arg0) {
-                if (arg0 == 0) {
-                    fabMain.setVisibility(View.VISIBLE);
-                } else
-                    fabMain.setVisibility(View.GONE);
+                switch (arg0){
+                    case 0:
+                        fabNote.setVisibility(View.VISIBLE);
+                        fab.setVisibility(View.GONE);
+                        break;
+                    case 1:
+                        fabNote.setVisibility(View.GONE);
+                        fab.setVisibility(View.GONE);
+                        break;
+                    case 2:
+                        fabNote.setVisibility(View.GONE);
+                        fab.setVisibility(View.VISIBLE);
+                        break;
+                    default:
+                        break;
+                }
             }
 
             @Override
