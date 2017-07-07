@@ -102,7 +102,7 @@
             android:layout_width="128dp"
             android:layout_height="48dp"
             android:gravity="center"
-            android:text="Powered By JohnChen"
+            android:text="Powered By JohnChen and AngelRoot"
             android:textSize="12sp"
             android:id="@+id/textView2"
             android:layout_marginLeft="51dp"

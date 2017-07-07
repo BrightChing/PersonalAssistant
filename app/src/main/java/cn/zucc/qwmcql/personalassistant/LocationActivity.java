@@ -1,13 +1,20 @@
 package cn.zucc.qwmcql.personalassistant;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
@@ -36,6 +43,8 @@ public class LocationActivity extends AppCompatActivity {
 
     private boolean isFirstLocate = true;
 
+    private boolean isRequest = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +52,24 @@ public class LocationActivity extends AppCompatActivity {
         mLocationClient.registerLocationListener(new MyLocationListener());
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_location);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarLocation);
+        toolbar.setTitle("地图");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(LocationActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+
         mapView = (MapView) findViewById(R.id.bmapView);
+        View child = mapView.getChildAt(1);
+        if (child != null && (child instanceof ImageView || child instanceof ZoomControls)){
+            child.setVisibility(View.INVISIBLE);
+        }//隐藏百度LOGO
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
         positionText = (TextView) findViewById(R.id.position_text_view);
@@ -63,11 +89,21 @@ public class LocationActivity extends AppCompatActivity {
         } else {
             requestLocation();
         }
+
+        FloatingActionButton fabLoc = (FloatingActionButton) findViewById(R.id.fab_location);
+        fabLoc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                isFirstLocate=true;
+                requestLocation();
+            }
+        });
+
     }
 
     private void navigateTo(BDLocation location) {
         if (isFirstLocate) {
-            Toast.makeText(this, "nav to " + location.getAddrStr(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "你的位置:" + location.getAddrStr(), Toast.LENGTH_LONG).show();
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
             baiduMap.animateMapStatus(update);
@@ -85,13 +121,16 @@ public class LocationActivity extends AppCompatActivity {
 
     private void requestLocation() {
         initLocation();
+//        mLocationClient.requestLocation();
         mLocationClient.start();
     }
 
     private void initLocation(){
         LocationClientOption option = new LocationClientOption();
-        option.setScanSpan(5000);
+        option.setScanSpan(1000);
+        option.setIsNeedLocationDescribe(true);
         option.setIsNeedAddress(true);
+        option.setCoorType("bd09ll");
         mLocationClient.setLocOption(option);
     }
 
@@ -140,7 +179,8 @@ public class LocationActivity extends AppCompatActivity {
     public class MyLocationListener implements BDLocationListener {
 
         @Override
-        public void onReceiveLocation(BDLocation location) {
+        public void onReceiveLocation(final BDLocation location) {
+
 //            StringBuilder currentPosition = new StringBuilder();
 //            currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
 //            currentPosition.append("经线：").append(location.getLongitude()).append("\n");
@@ -169,5 +209,6 @@ public class LocationActivity extends AppCompatActivity {
 
 
     }
+
 
 }

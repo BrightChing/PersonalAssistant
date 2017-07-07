@@ -26,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
@@ -36,7 +35,7 @@ public class FragmentSchedulePlan extends Fragment {
     CalendarView calendarView = null;
     ListView noteListView;
     String planDate = "";
-    List<SchedulePlan> noteDatas = new ArrayList<>();
+    ArrayList<SchedulePlan> planDatas = new ArrayList<>();
     TextView txvTip = null;
     RelativeLayout rm;
     long date;
@@ -68,7 +67,7 @@ public class FragmentSchedulePlan extends Fragment {
         noteListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View v, int position, long id) {
-                showPlan(noteDatas.get(position));
+                showPlan(planDatas.get(position));
             }
         });
         registerForContextMenu(noteListView);
@@ -94,7 +93,7 @@ public class FragmentSchedulePlan extends Fragment {
     private void refreshNoteList() {
         planDate = getDateString(date);
         loadData();
-        if (noteDatas != null && noteDatas.size() > 0) {
+        if (planDatas != null && planDatas.size() > 0) {
             ListAdapter adapter = new ListAdapter(getActivity().getApplicationContext());
             noteListView.setAdapter(adapter);
             txvTip.setText(planDate + " 日程列表：");
@@ -106,7 +105,7 @@ public class FragmentSchedulePlan extends Fragment {
     }
 
     private void loadData() {
-        noteDatas = DBServer.searchPlanByDate(getActivity().getApplicationContext(), planDate);
+        planDatas = DBServer.searchPlanByDate(getActivity().getApplicationContext(), planDate);
     }
 
     private void newPlan() {
@@ -148,7 +147,7 @@ public class FragmentSchedulePlan extends Fragment {
 
         @Override
         public int getCount() {
-            return noteDatas.size();
+            return planDatas.size();
         }
 
         @Override
@@ -173,7 +172,7 @@ public class FragmentSchedulePlan extends Fragment {
             } else {
                 holder = (ListViewHolder) convertView.getTag();
             }
-            holder.txvName.setText(noteDatas.get(position).getTitle());
+            holder.txvName.setText(planDatas.get(position).getTitle());
             holder.subLine.setVisibility(View.GONE);
             return convertView;
         }
@@ -188,10 +187,10 @@ public class FragmentSchedulePlan extends Fragment {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case 0:
-                editPlan(noteDatas.get(menuInfo.position));
+                editPlan(planDatas.get(menuInfo.position));
                 break;
             case 1:
-                deleteNote(noteDatas.get(menuInfo.position));
+                deleteNote(planDatas.get(menuInfo.position));
                 refreshNoteList();
                 break;
         }
