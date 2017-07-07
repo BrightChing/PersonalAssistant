@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 //                finish();
             }
         });
+
         final FloatingActionButton fab= (FloatingActionButton) findViewById(R.id.fab_incomeCost);
 
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
