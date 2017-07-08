@@ -29,7 +29,6 @@ import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.anime.DepthPageTransformer;
 
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;

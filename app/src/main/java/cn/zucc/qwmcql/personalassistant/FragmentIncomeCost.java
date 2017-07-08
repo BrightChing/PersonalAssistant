@@ -1,6 +1,8 @@
 package cn.zucc.qwmcql.personalassistant;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
@@ -9,13 +11,17 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageButton;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.bean.IncomeCostBean;
@@ -23,7 +29,6 @@ import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.util.RecyclerViewAdapter;
 
 public class FragmentIncomeCost extends Fragment {
-    private ImageButton addIncomeCostBtn;
     RecyclerView mRecyclerView;
     RecyclerViewAdapter mRecyclerViewAdapter;
     public List<IncomeCostBean> mList;
@@ -48,14 +53,6 @@ public class FragmentIncomeCost extends Fragment {
                 holder.setText(R.id.income_cost_date, incomeCostBean.getIncomeCostDate());
             }
         };
-//        addIncomeCostBtn = (ImageButton) rootView.findViewById(R.id.addIncomeCostBtn);
-//        addIncomeCostBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                incomeCostDialog("添加收支", null, 0);
-//            }
-//        });
-
         //设置recycleView监听
         mRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapter.OnItemClickListener() {
             @Override
@@ -75,10 +72,11 @@ public class FragmentIncomeCost extends Fragment {
         mRecyclerView.setAdapter(mRecyclerViewAdapter);
         return rootView;
     }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        fab= (FloatingActionButton) getActivity().findViewById(R.id.fab_incomeCost);
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab_incomeCost);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,59 +91,37 @@ public class FragmentIncomeCost extends Fragment {
      * @param title 对话框的标题
      */
     private void incomeCostDialog(String title, final IncomeCostBean cost, final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View viewDialog = inflater.inflate(R.layout.income_cost_dialog, null);
-        final DatePicker datePicker = (DatePicker) viewDialog.findViewById(R.id.datePicker);
-        final TextView money = (TextView) viewDialog.findViewById(R.id.money);
-        final TextView source = (TextView) viewDialog.findViewById(R.id.source);
-        if (cost != null) {
-            money.setText(cost.getMoney() + "");
-            source.setText(cost.getSource());
-            String[] str = cost.getIncomeCostDate().split("-");
-            datePicker.updateDate(Integer.valueOf(str[0]), Integer.valueOf(str[1]), Integer.valueOf(str[2]));
-        }
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        final View viewDialog = LayoutInflater.from(getContext()).inflate(R.layout.income_cost_dialog, null);
+        setDialogData(viewDialog, cost);
         builder.setView(viewDialog)
                 .setTitle(title)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        IncomeCostBean incomeCostBean = new IncomeCostBean();
-                        int n = datePicker.getMonth() + 1;
-                        String m = n > 9 ? n + "" : "0" + n;
-                        n = datePicker.getDayOfMonth();
-                        String d = n > 9 ? n + "" : "0" + n;
-                        incomeCostBean.setIncomeCostDate(datePicker.getYear() + "-" + m + "-" + d);
-                        incomeCostBean.setSource(source.getText().toString());
-                        if (money == null || "".equals(money.getText().toString()))
-                            incomeCostBean.setMoney(Integer.parseInt("0"));
-                        else
-                            incomeCostBean.setMoney(Float.parseFloat(money.getText().toString()));
-                        if (cost == null) {
-                            DBServer.addIncomeCost(getContext(), incomeCostBean);
-                            incomeCostBean.setId(DBServer.getIncomeCostId(getContext()));
-                            mList.add(getPosition(incomeCostBean.getIncomeCostDate()), incomeCostBean);
-                        } else {
-                            DBServer.updataIncomeCost(getContext(), incomeCostBean);
-                            incomeCostBean.setId(DBServer.getIncomeCostId(getContext()));
-                            mList.set(position, incomeCostBean);
-                        }
-                        mRecyclerViewAdapter.notifyDataSetChanged();
-                    }
-                })
-                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                .setPositiveButton("确定", null).
+                setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                     }
-                })
-                .create()
-                .show();
-    }
-
-    private void chartDialog(String title) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
-        View viewDialog = inflater.inflate(R.layout.chart_dialog, null);
-        builder.setTitle(title).setView(viewDialog).create().show();
+                });
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                IncomeCostBean incomeCostBean = checkIncomeCost(viewDialog);
+                if (incomeCostBean != null) {
+                    if (cost == null) {
+                        DBServer.addIncomeCost(getContext(), incomeCostBean);
+                        incomeCostBean.setId(DBServer.getIncomeCostId(getContext()));
+                        mList.add(getPosition(incomeCostBean.getIncomeCostDate()), incomeCostBean);
+                    } else {
+                        incomeCostBean.setId(cost.getId());
+                        DBServer.updataIncomeCost(getContext(), incomeCostBean);
+                        mList.set(position, incomeCostBean);
+                    }
+                    mRecyclerViewAdapter.notifyDataSetChanged();
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
     public void showBottomSheetDialog() {
@@ -157,7 +133,9 @@ public class FragmentIncomeCost extends Fragment {
         tvChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                chartDialog("图表");
+                Intent intent = new Intent(getActivity(), ChartActivity.class);
+                startActivity(intent);
+                dialog.dismiss();
             }
         });
         tvAdd.setOnClickListener(new View.OnClickListener() {
@@ -190,5 +168,57 @@ public class FragmentIncomeCost extends Fragment {
                 return i;
         }
         return n;
+    }
+
+    private IncomeCostBean checkIncomeCost(View view) {
+        DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
+        TextView money = (TextView) view.findViewById(R.id.money);
+        TextView source = (TextView) view.findViewById(R.id.source);
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+        int n = datePicker.getMonth() + 1;
+        String m = n > 9 ? n + "" : "0" + n;
+        n = datePicker.getDayOfMonth();
+        String d = n > 9 ? n + "" : "0" + n;
+        if ("".equals(source.getText().toString())) {
+            errorDialog("请输入收支备注(来源)");
+            return null;
+        }
+        if ("".equals(money.getText().toString())) {
+            errorDialog("请输入收支金额");
+            return null;
+        }
+        IncomeCostBean cost = new IncomeCostBean();
+        if (spinner.getSelectedItemPosition() == 0) {
+            cost.setIncomeCostType(0);
+            cost.setMoney(-Float.parseFloat(money.getText().toString()));
+        } else {
+            cost.setIncomeCostType(1);
+            cost.setMoney(Float.parseFloat(money.getText().toString()));
+        }
+        cost.setSource(source.getText().toString());
+        cost.setIncomeCostDate(datePicker.getYear() + "-" + m + "-" + d);
+        return cost;
+    }
+
+    private void setDialogData(View view, IncomeCostBean cost) {
+        DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
+        TextView money = (TextView) view.findViewById(R.id.money);
+        TextView source = (TextView) view.findViewById(R.id.source);
+        Spinner spinner = (Spinner) view.findViewById(R.id.spinner);
+        if (cost != null) {
+            if (cost.getIncomeCostType() == 0)
+                money.setText(String.valueOf(-cost.getMoney()));
+            else
+                money.setText(String.valueOf(cost.getMoney()));
+            source.setText(cost.getSource());
+            String[] str = cost.getIncomeCostDate().split("-");
+            datePicker.updateDate(Integer.valueOf(str[0]), Integer.valueOf(str[1]), Integer.valueOf(str[2]));
+            spinner.setSelection(cost.getIncomeCostType());
+        }
+    }
+
+    private void errorDialog(String str) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("提示").setPositiveButton("OK",null).setMessage(str).create().show();
     }
 }

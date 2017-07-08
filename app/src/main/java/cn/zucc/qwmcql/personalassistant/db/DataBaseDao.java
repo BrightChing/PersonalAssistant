@@ -37,6 +37,7 @@ public class DataBaseDao {
         ContentValues cv = new ContentValues();
         cv.put("money", incomeCostBean.getMoney());
         cv.put("incomeCostDate", incomeCostBean.getIncomeCostDate());
+        cv.put("incomeCostType", incomeCostBean.getIncomeCostType());
         cv.put("source", incomeCostBean.getSource());
         db.insert("cost", null, cv);
         db.close();
@@ -47,6 +48,7 @@ public class DataBaseDao {
         ContentValues cv = new ContentValues();
         cv.put("money", incomeCostBean.getMoney());
         cv.put("incomeCostDate", incomeCostBean.getIncomeCostDate());
+        cv.put("incomeCostType", incomeCostBean.getIncomeCostType());
         cv.put("source", incomeCostBean.getSource());
         db.update("cost", cv, "_id = ?", new String[]{String.valueOf(incomeCostBean.getId())});
         db.close();
@@ -62,6 +64,40 @@ public class DataBaseDao {
         SQLiteDatabase db = helper.getWritableDatabase();
         List<IncomeCostBean> list = new ArrayList<>();
         Cursor cur = db.query("cost", null, null, null, null, null, "incomeCostDate asc");
+        while (cur.moveToNext()) {
+            IncomeCostBean ic = new IncomeCostBean();
+            ic.setId(cur.getInt(cur.getColumnIndex("_id")));
+            ic.setMoney(cur.getFloat(cur.getColumnIndex("money")));
+            ic.setIncomeCostType(cur.getInt(cur.getColumnIndex("incomeCostType")));
+            ic.setSource(cur.getString(cur.getColumnIndex("source")));
+            ic.setIncomeCostDate(cur.getString(cur.getColumnIndex("incomeCostDate")));
+            list.add(ic);
+        }
+        db.close();
+        cur.close();
+        return list;
+    }
+    public List<IncomeCostBean> searchIncome() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        List<IncomeCostBean> list = new ArrayList<>();
+        Cursor cur = db.query("cost", null, "money > 0", null, null, null, "incomeCostDate asc");
+        while (cur.moveToNext()) {
+            IncomeCostBean ic = new IncomeCostBean();
+            ic.setId(cur.getInt(cur.getColumnIndex("_id")));
+            ic.setMoney(cur.getFloat(cur.getColumnIndex("money")));
+            ic.setSource(cur.getString(cur.getColumnIndex("source")));
+            ic.setIncomeCostDate(cur.getString(cur.getColumnIndex("incomeCostDate")));
+            list.add(ic);
+        }
+        db.close();
+        cur.close();
+        return list;
+    }
+
+    public List<IncomeCostBean> searchCost() {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        List<IncomeCostBean> list = new ArrayList<>();
+        Cursor cur = db.query("cost", null, "money < 0", null, null, null, "incomeCostDate asc");
         while (cur.moveToNext()) {
             IncomeCostBean ic = new IncomeCostBean();
             ic.setId(cur.getInt(cur.getColumnIndex("_id")));

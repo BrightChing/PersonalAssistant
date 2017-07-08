@@ -37,9 +37,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".anime.AnimeActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity android:name=".SettingActivity" />
         <activity
             android:name=".EditPlanActivity"
@@ -51,18 +49,21 @@
 
         <receiver
             android:name=".alarm.AlarmReceiver"
-            android:process=":remote"></receiver>
+            android:process=":remote" />
 
         <activity android:name=".SearchActivity" />
-        <activity android:name=".LocationActivity"></activity>
+        <activity android:name=".LocationActivity" />
 
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote" />
+
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Cf72IOF3Om6SjsX2LIibryGKr8AbbMcW" />
+
+        <activity android:name=".ChartActivity"></activity>
     </application>
 
 </manifest>

@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
 import android.widget.Toast;
 
@@ -57,7 +56,7 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = getLayoutInflater();
-                View dialog = inflater.inflate(R.layout.dialogpassword, (ViewGroup) findViewById(R.id.pass));
+                View dialog = inflater.inflate(R.layout.dialog_password, (ViewGroup) findViewById(R.id.pass));
                 preferences = getSharedPreferences("password", Context.MODE_PRIVATE);
                 editor = preferences.edit();
                 int count = preferences.getInt("count", 0);
@@ -76,7 +75,7 @@ public class SettingActivity extends AppCompatActivity {
                         if (editText1.getText().toString().equals(commit)) {
                             pass = editText2.getText().toString();
                             editor.putString("password", pass);
-                            editor.commit();
+                            editor.apply();
                             Toast.makeText(SettingActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(SettingActivity.this, "旧密码错误！", Toast.LENGTH_SHORT).show();
@@ -109,7 +108,7 @@ public class SettingActivity extends AppCompatActivity {
                     flag = 0;
                 }
                 editor.putInt("flag", flag);
-                editor.commit();
+                editor.apply();
             }
         });
     }

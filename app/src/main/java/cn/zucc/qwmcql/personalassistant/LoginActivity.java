@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = getLayoutInflater();
-                View dialog = inflater.inflate(R.layout.dialogpassword, (ViewGroup) findViewById(R.id.pass));
+                View dialog = inflater.inflate(R.layout.dialog_password, (ViewGroup) findViewById(R.id.pass));
                 preferences = getSharedPreferences("password", Context.MODE_PRIVATE);
                 editor = preferences.edit();
                 int count = preferences.getInt("count", 0);

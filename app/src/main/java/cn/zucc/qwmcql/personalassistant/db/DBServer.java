@@ -89,4 +89,14 @@ public class DBServer {
         DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
         return dataBaseDao.searchIncomeCost();
     }
+    public static List<IncomeCostBean>searchIncome(Context context)
+    {
+        DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
+        return dataBaseDao.searchCost();
+    }
+    public static List<IncomeCostBean>searchCost(Context context)
+    {
+        DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
+        return dataBaseDao.searchIncome();
+    }
 }

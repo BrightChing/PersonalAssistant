@@ -8,12 +8,9 @@ import java.io.Serializable;
 public class IncomeCostBean implements Serializable{
     private int id;
     private String incomeCostDate;
-    private int incomeCostIv;
+    private int incomeCostType;
     private float money;
     private String source;
-
-    public IncomeCostBean() {
-    }
 
     public int getId() {
         return id;
@@ -31,12 +28,12 @@ public class IncomeCostBean implements Serializable{
         this.incomeCostDate = incomeCostDate;
     }
 
-    public int getIncomeCostIv() {
-        return incomeCostIv;
+    public int getIncomeCostType() {
+        return incomeCostType;
     }
 
-    public void setIncomeCostIv(int incomeCostIv) {
-        this.incomeCostIv = incomeCostIv;
+    public void setIncomeCostType(int incomeCostType) {
+        this.incomeCostType = incomeCostType;
     }
 
     public float getMoney() {
