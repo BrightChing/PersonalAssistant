@@ -4,7 +4,9 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -43,8 +45,7 @@ public class LocationActivity extends AppCompatActivity {
 
     private boolean isFirstLocate = true;
 
-    private boolean isRequest = false;
-
+    private CoordinatorLayout coor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +53,7 @@ public class LocationActivity extends AppCompatActivity {
         mLocationClient.registerLocationListener(new MyLocationListener());
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_location);
-
+        coor=(CoordinatorLayout)findViewById(R.id.coor_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarLocation);
         toolbar.setTitle("地图");
         setSupportActionBar(toolbar);
@@ -103,7 +104,7 @@ public class LocationActivity extends AppCompatActivity {
 
     private void navigateTo(BDLocation location) {
         if (isFirstLocate) {
-            Toast.makeText(this, "你的位置:" + location.getAddrStr(), Toast.LENGTH_LONG).show();
+            Snackbar.make(coor,"你的位置:" + location.getAddrStr(), Snackbar.LENGTH_LONG).show();
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
             baiduMap.animateMapStatus(update);
@@ -180,22 +181,6 @@ public class LocationActivity extends AppCompatActivity {
 
         @Override
         public void onReceiveLocation(final BDLocation location) {
-
-//            StringBuilder currentPosition = new StringBuilder();
-//            currentPosition.append("纬度：").append(location.getLatitude()).append("\n");
-//            currentPosition.append("经线：").append(location.getLongitude()).append("\n");
-//            currentPosition.append("国家：").append(location.getCountry()).append("\n");
-//            currentPosition.append("省：").append(location.getProvince()).append("\n");
-//            currentPosition.append("市：").append(location.getCity()).append("\n");
-//            currentPosition.append("区：").append(location.getDistrict()).append("\n");
-//            currentPosition.append("街道：").append(location.getStreet()).append("\n");
-//            currentPosition.append("定位方式：");
-//            if (location.getLocType() == BDLocation.TypeGpsLocation) {
-//                currentPosition.append("GPS");
-//            } else if (location.getLocType() == BDLocation.TypeNetWorkLocation) {
-//                currentPosition.append("网络");
-//            }
-//            positionText.setText(currentPosition);
             if (location.getLocType() == BDLocation.TypeGpsLocation
                     || location.getLocType() == BDLocation.TypeNetWorkLocation) {
                 navigateTo(location);
@@ -206,7 +191,6 @@ public class LocationActivity extends AppCompatActivity {
         public void onConnectHotSpotMessage(String s, int i) {
 
         }
-
 
     }
 

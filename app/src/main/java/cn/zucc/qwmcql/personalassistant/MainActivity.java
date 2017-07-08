@@ -91,7 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
                 startActivity(intent);
-//                finish();
             }
         });
 
@@ -197,8 +196,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_share) {
-            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
-            startActivity(intent);
+
         } else if (id == R.id.nav_help) {
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);
@@ -207,6 +205,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             finish();
+        }else if(id==R.id.nav_location){
+            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+            startActivity(intent);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

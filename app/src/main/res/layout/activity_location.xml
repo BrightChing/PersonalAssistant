@@ -3,9 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
+    android:layout_height="match_parent"
+    android:id="@+id/coor_location">
 
 <FrameLayout
     android:layout_width="match_parent"
@@ -23,14 +22,7 @@
         android:layout_height="fill_parent"
         android:clickable="true"
         />
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="top|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@drawable/ic_my_location_black_24dp"
-        app:layout_behavior=".anime.ScrollAwareFABBehaviorDepend" />
+
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -45,6 +37,13 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
     </android.support.design.widget.AppBarLayout>
 </FrameLayout>
-
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom"
+        android:layout_margin="@dimen/fab_margin"
+        app:srcCompat="@drawable/ic_my_location_black_24dp"
+        app:layout_behavior=".anime.ScrollAwareFABBehaviorDepend" />
 
 </android.support.design.widget.CoordinatorLayout>

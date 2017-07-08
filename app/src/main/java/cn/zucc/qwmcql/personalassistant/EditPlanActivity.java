@@ -93,7 +93,7 @@ public class EditPlanActivity extends Activity {
         timePicker.setVisibility(View.VISIBLE);
         timePicker.setEnabled(true);
         timeShower.setVisibility(View.GONE);
-        timePicker.setIs24HourView(Boolean.TRUE);
+//        timePicker.setIs24HourView(Boolean.TRUE);
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int hour, int minutes) {
@@ -110,7 +110,7 @@ public class EditPlanActivity extends Activity {
         btnEdit.setVisibility(View.GONE);
         timePicker.setCurrentHour(Integer.valueOf(currPlan.getHour()));
         timePicker.setCurrentMinute(Integer.valueOf(currPlan.getMinutes()));
-        timePicker.setIs24HourView(Boolean.TRUE);
+//        timePicker.setIs24HourView(Boolean.TRUE);
         timePicker.setVisibility(View.VISIBLE);
         etNoteTitle.setEnabled(true);
         postScript.setEnabled(true);
@@ -176,8 +176,10 @@ public class EditPlanActivity extends Activity {
             if(planDate!=null&&!"".equals(planDate))
             {
                 currPlan.setDate(planDate);
-            DBServer.addPlan(this, currPlan);}
-            else DBServer.updatePlan(this,currPlan);
+            DBServer.addPlan(this, currPlan);
+            }
+            else
+                DBServer.updatePlan(this,currPlan);
             AlarmSetting();
             EditPlanActivity.this.finish();
         } else {
@@ -195,6 +197,7 @@ public class EditPlanActivity extends Activity {
         Intent intent = new Intent(EditPlanActivity.this, AlarmReceiver.class);
         intent.putExtra("planTitle", currPlan.getTitle());
         intent.putExtra("planId", currPlan.getId());
+
         PendingIntent sender = PendingIntent.getBroadcast(EditPlanActivity.this, currPlan.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         long firstTime = SystemClock.elapsedRealtime();    // 开机之后到现在的运行时间(包括睡眠时间)
         long systemTime = System.currentTimeMillis();

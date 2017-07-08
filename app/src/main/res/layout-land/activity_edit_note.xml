@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="24dp"
+    android:layout_margin="16dp"
     android:layout_marginTop="48dp"
     android:background="@null"
     android:orientation="horizontal"
@@ -74,7 +74,8 @@
                     android:lines="1"
                     android:textColor="#212121"
                     android:layout_marginLeft="16dp"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    android:layout_marginRight="16dp"/>
             </LinearLayout>
 
 
@@ -82,7 +83,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/dateLiner"
-                android:layout_below="@id/titleLiner">
+                android:layout_below="@id/titleLiner"
+                android:orientation="horizontal">
                 <TextView
                     android:id="@+id/datecontent"
                     android:layout_width="wrap_content"
@@ -134,7 +136,9 @@
                     android:layout_alignLeft="@+id/timepicker"
                     android:layout_alignStart="@+id/timepicker"
                     android:layout_below="@+id/timepicker"
-                    android:background="@null"
+                    android:background="@drawable/bg_edittext"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
                     android:gravity="top"
                     android:inputType="textMultiLine"
                     android:maxLines="1"
@@ -142,7 +146,8 @@
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="#212121"
-                    android:textSize="16dp" />
+                    android:textSize="16dp"
+                    />
             </LinearLayout>
             <CheckBox
                 android:id="@+id/checkBox"
@@ -150,6 +155,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/hint"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_below="@id/postLiner"
                 />
         </RelativeLayout>

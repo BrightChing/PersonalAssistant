@@ -20,4 +20,5 @@
     <string name="date_time">时间</string>
     <string name="postscript">备注</string>
     <string name="hint">重复提醒</string>
+    <string name="Location">地图定位</string>
 </resources>
