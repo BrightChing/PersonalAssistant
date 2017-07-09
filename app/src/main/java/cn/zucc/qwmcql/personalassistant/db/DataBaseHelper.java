@@ -24,7 +24,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, VERSION);
     }
+
     public static DataBaseHelper helper;
+
     public static DataBaseHelper getInstance(Context context) {
         if (helper == null) {
             helper = new DataBaseHelper(context);

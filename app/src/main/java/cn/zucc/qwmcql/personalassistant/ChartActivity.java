@@ -36,7 +36,7 @@ public class ChartActivity extends AppCompatActivity {
     private boolean hasLabelForSelected = true;
     private FloatingActionButton btn;
     private PieChartView chart;
-    private float[] arry;
+    private float[] array;
     private List<IncomeCostBean> mList1, mList2;
 
     @Override
@@ -45,7 +45,6 @@ public class ChartActivity extends AppCompatActivity {
         setContentView(R.layout.activity_chart);
         initViews();
         initList();
-        arry = new float[]{sumIncomeCost(mList1),sumIncomeCost(mList2)};
         initDates();
     }
 
@@ -68,10 +67,11 @@ public class ChartActivity extends AppCompatActivity {
      * 生成数据
      */
     private void generateData() {
+        array = new float[]{sumIncomeCost(mList1),sumIncomeCost(mList2)};
         int numValues = 2;//分成的块数
         List<SliceValue> values = new ArrayList<>();
-        for (int i = 0; i < numValues; ++i) {
-            SliceValue sliceValue = new SliceValue(arry[i], ChartUtils.pickColor());//每一块的值和颜色，图标根据值自动进行比例分配
+        for (int i = 0; i < numValues;i++ ) {
+            SliceValue sliceValue = new SliceValue(array[i], ChartUtils.pickColor());//每一块的值和颜色，图标根据值自动进行比例分配
             values.add(sliceValue);
         }
         data = new PieChartData(values);
@@ -104,13 +104,12 @@ public class ChartActivity extends AppCompatActivity {
         @Override
         public void onValueSelected(int arcIndex, SliceValue value) {
             if (arcIndex == 0)
-                showBottomSheetDialog("收入",mList1);
-            else showBottomSheetDialog("支出",mList2);
+                showBottomSheetDialog("支出",mList1);
+            else showBottomSheetDialog("收入",mList2);
         }
 
         @Override
         public void onValueDeselected() {
-            // TODO Auto-generated method stub
 
         }
     }
