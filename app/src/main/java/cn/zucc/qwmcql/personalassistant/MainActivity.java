@@ -4,7 +4,10 @@ package cn.zucc.qwmcql.personalassistant;
  * Created by My PC on 2017/5/22.
  */
 
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -18,17 +21,30 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.anime.DepthPageTransformer;
-import cn.zucc.qwmcql.personalassistant.wechat.ShareActivity;
+import cn.zucc.qwmcql.personalassistant.wechat.Constants;
+
+import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneTimeline;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TabLayout mTabLayout;
@@ -37,6 +53,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private List<Fragment> mFragments;
     private long exitTime = 0;
     private FloatingActionButton fabNote;
+    private RelativeLayout friend,timeLine;
+    private IWXAPI api;
+    private static final int THUMB_SIZE = 150;
+    private int mTargetScene =SendMessageToWX.Req.WXSceneSession;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -192,13 +212,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_slideshow) {
             mViewPager.setCurrentItem(3);
         } else if (id == R.id.nav_manage) {
+
             Intent intent = new Intent(MainActivity.this, SettingActivity.class);
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_share) {
-            Intent intent = new Intent(MainActivity.this, ShareActivity.class);
-            startActivity(intent);
-            finish();
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            LayoutInflater inflater = getLayoutInflater();
+            View dialog = inflater.inflate(R.layout.share_dialog, (ViewGroup) findViewById(R.id.shareLiner));
+            friend=(RelativeLayout) dialog.findViewById(R.id.share_friends);
+            timeLine=(RelativeLayout) dialog.findViewById(R.id.share_timeline);
+            regToWx();
+            friend.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mTargetScene = SendMessageToWX.Req.WXSceneSession;
+                    shareWeChat();
+                }
+            });
+            timeLine.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
+                    shareWeChat();
+                }
+            });
+            builder.setTitle("分享到");
+            builder.setView(dialog);
+            builder.show();
+//            Intent intent = new Intent(MainActivity.this, ShareActivity.class);
+//            startActivity(intent);
+//            finish();
         } else if (id == R.id.nav_help) {
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);
@@ -214,5 +258,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private void shareWeChat(){
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "https://github.com/JohnChin/NoteMan/blob/master/README.md";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "个人助理Assis";
+        msg.description = "个人助理App";
+        Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bookshelf);
+        Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp,THUMB_SIZE, THUMB_SIZE, true);
+        bmp.recycle();
+        msg.thumbData = bmpToByteArray(thumbBmp, true);
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = mTargetScene;
+        api.sendReq(req);
+    }
+    private void regToWx() {
+        api = WXAPIFactory.createWXAPI(this, Constants.APP_ID, true);
+        api.registerApp(Constants.APP_ID);
+    }
+    public static byte[] bmpToByteArray(final Bitmap bmp, final boolean needRecycle) {
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.PNG, 100, output);
+        if (needRecycle) {
+            bmp.recycle();
+        }
+
+        byte[] result = output.toByteArray();
+        try {
+            output.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 }
