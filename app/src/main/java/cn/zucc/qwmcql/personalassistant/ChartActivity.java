@@ -1,5 +1,6 @@
 package cn.zucc.qwmcql.personalassistant;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -58,6 +60,17 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_chart);
+        toolbar.setTitle("收入支出图标");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(ChartActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
         chart = (PieChartView) findViewById(R.id.chart);
         chart.setOnValueTouchListener(new ValueTouchListener());//添加点击事件
         chart.setCircleFillRatio(0.8f);//设置图所占整个view的比例  当有外面的数据时使用，防止数据显示不全
