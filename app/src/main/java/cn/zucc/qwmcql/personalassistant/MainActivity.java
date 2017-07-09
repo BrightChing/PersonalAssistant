@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.anime.DepthPageTransformer;
+import cn.zucc.qwmcql.personalassistant.wechat.ShareActivity;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TabLayout mTabLayout;
@@ -195,7 +196,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_share) {
-
+            Intent intent = new Intent(MainActivity.this, ShareActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_help) {
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);

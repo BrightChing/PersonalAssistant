@@ -12,6 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
 
     <application
         android:allowBackup="false"
@@ -63,7 +64,22 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Cf72IOF3Om6SjsX2LIibryGKr8AbbMcW" />
 
+        <activity android:name=".wechat.ShareActivity"></activity>
         <activity android:name=".ChartActivity"></activity>
+
     </application>
+
+    <receiver
+        android:name=".wechat.AppRegister"
+        android:permission="com.tencent.mm.plugin.permission.SEND" >
+        <intent-filter>
+            <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
+        </intent-filter>
+    </receiver>
+
+    <activity
+        android:name=".wechat.WXEntryActivity"
+        android:exported="true">
+    </activity>
 
 </manifest>

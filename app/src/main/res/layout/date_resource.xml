@@ -71,10 +71,10 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:background="@drawable/ic_room_black_24dp"
-            android:layout_below="@+id/dialogDate"
+            android:layout_marginRight="17dp"
+            android:layout_marginEnd="17dp"
+            android:layout_alignParentTop="true"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginEnd="16dp" />
+            android:layout_alignParentEnd="true" />
     </RelativeLayout>
 </LinearLayout>

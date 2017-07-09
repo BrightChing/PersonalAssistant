@@ -24,10 +24,10 @@ import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
 
 public class SearchActivity extends AppCompatActivity {
     ArrayList<SchedulePlan> planData = new ArrayList<>();
-    String SearchPlan="";
+    String SearchPlan = "";
     ListView searchView;
     SearchView searchBox;
-    TextView dialogTitle,dialogDate,dialogPost;
+    TextView dialogTitle, dialogDate, dialogPost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +48,9 @@ public class SearchActivity extends AppCompatActivity {
         refreshNoteList();
     }
 
-    private void initView(){
-        searchView=(ListView)findViewById(R.id.serach_results);
-        searchBox= (SearchView) findViewById(R.id.search_box);
+    private void initView() {
+        searchView = (ListView) findViewById(R.id.serach_results);
+        searchBox = (SearchView) findViewById(R.id.search_box);
         searchView.setTextFilterEnabled(true);
         searchBox.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -60,15 +60,14 @@ public class SearchActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (!TextUtils.isEmpty(newText)){
-                    SearchPlan=newText;
+                if (!TextUtils.isEmpty(newText)) {
+                    SearchPlan = newText;
                     refreshNoteList();
                 }
-                if (TextUtils.isEmpty(newText)){
-                    SearchPlan=newText;
+                if (TextUtils.isEmpty(newText)) {
+                    SearchPlan = newText;
                     refreshNoteList();
-                }
-                    else{
+                } else {
                     searchView.clearTextFilter();
                 }
                 return false;
@@ -79,12 +78,15 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> adapterView, View v, int position, long id) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(SearchActivity.this);
                 LayoutInflater inflater = getLayoutInflater();
-                View dialog = inflater.inflate(R.layout.date_resource,(ViewGroup) findViewById(R.id.dateResource));
-                dialogTitle=(TextView) dialog.findViewById(R.id.dialogTitle);
-                dialogDate=(TextView) dialog.findViewById(R.id.dialogDate);
-                dialogPost=(TextView) dialog.findViewById(R.id.dialogPost);
+                View dialog = inflater.inflate(R.layout.date_resource, (ViewGroup) findViewById(R.id.dateResource));
+                dialogTitle = (TextView) dialog.findViewById(R.id.dialogTitle);
+                dialogDate = (TextView) dialog.findViewById(R.id.dialogDate);
+                dialogPost = (TextView) dialog.findViewById(R.id.dialogPost);
                 dialogTitle.setText(planData.get(position).getTitle());
-                dialogDate.setText(planData.get(position).getDate()+"  "+planData.get(position).getHour()+":"+planData.get(position).getMinutes());
+                if (Integer.valueOf(planData.get(position).getMinutes()) <= 10)
+                    dialogDate.setText(planData.get(position).getDate() + "  " + planData.get(position).getHour() + ":0" + planData.get(position).getMinutes());
+                else
+                    dialogDate.setText(planData.get(position).getDate() + "  " + planData.get(position).getHour() + ":" + planData.get(position).getMinutes());
                 dialogPost.setText(planData.get(position).getPostScript());
                 builder.setTitle("日程信息");
                 builder.setView(dialog);
@@ -95,13 +97,15 @@ public class SearchActivity extends AppCompatActivity {
 
 
     private void loadData() {
-        planData = DBServer.searchByIndistinct(getApplicationContext(),SearchPlan);
+        planData = DBServer.searchByIndistinct(getApplicationContext(), SearchPlan);
     }
+
     private void refreshNoteList() {
         loadData();
         ListAdapter adapter = new ListAdapter(getApplicationContext());
         searchView.setAdapter(adapter);
     }
+
     public class ListAdapter extends BaseAdapter {
 
         private Context mContext = null;
@@ -143,10 +147,12 @@ public class SearchActivity extends AppCompatActivity {
             holder.subLine.setText(planData.get(position).getPostScript());
             return convertView;
         }
+
         class ListViewHolder {
-            TextView txvName,subLine;
+            TextView txvName, subLine;
         }
     }
+
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
             Intent intent = new Intent(SearchActivity.this, MainActivity.class);

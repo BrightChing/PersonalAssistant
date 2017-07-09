@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.text.InputType;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
@@ -68,9 +69,13 @@ public class EditPlanActivity extends Activity {
         currPlan = (SchedulePlan) getIntent().getSerializableExtra("plan");
         etNoteLayout.setVisibility(View.VISIBLE);
         etNoteTitle.setText(currPlan.getTitle());
-        etNoteTitle.setEnabled(false);
-        postScript.setEnabled(false);
+//        etNoteTitle.setEnabled(false);
+        etNoteTitle.setInputType(InputType.TYPE_NULL);
+//        postScript.setEnabled(false);
         postScript.setText(currPlan.getPostScript());
+        postScript.setInputType(InputType.TYPE_NULL);
+        postScript.setHorizontallyScrolling(false);
+        postScript.setLines(5);
         timePicker.setVisibility(View.GONE);
         if (Integer.valueOf(currPlan.getMinutes()).intValue() < 10) {
             timeShower.setText(currPlan.getHour() + ":0" + currPlan.getMinutes());
@@ -112,8 +117,12 @@ public class EditPlanActivity extends Activity {
         timePicker.setCurrentMinute(Integer.valueOf(currPlan.getMinutes()));
 //        timePicker.setIs24HourView(Boolean.TRUE);
         timePicker.setVisibility(View.VISIBLE);
-        etNoteTitle.setEnabled(true);
-        postScript.setEnabled(true);
+        etNoteTitle.setInputType(InputType.TYPE_CLASS_TEXT);
+//        etNoteTitle.setEnabled(true);
+//        postScript.setEnabled(true);
+        postScript.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
+        postScript.setHorizontallyScrolling(false);
+        postScript.setLines(5);
         checkBox.setEnabled(true);
     }
 

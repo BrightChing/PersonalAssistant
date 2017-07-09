@@ -133,9 +133,10 @@ public class FragmentIncomeCost extends Fragment {
         tvChart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dialog.dismiss();
                 Intent intent = new Intent(getActivity(), ChartActivity.class);
                 startActivity(intent);
-                dialog.dismiss();
+
             }
         });
         tvAdd.setOnClickListener(new View.OnClickListener() {
