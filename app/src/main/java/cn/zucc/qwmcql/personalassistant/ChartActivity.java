@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +39,8 @@ public class ChartActivity extends AppCompatActivity {
     private PieChartView chart;
     private float[] array;
     private List<IncomeCostBean> mList1, mList2;
+    private ImageView ivIn;
+    private ImageView ivCt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class ChartActivity extends AppCompatActivity {
     }
 
     private void initViews() {
+        ivCt = (ImageView) findViewById(R.id.iv_ct);
+        ivIn = (ImageView) findViewById(R.id.iv_in);
         chart = (PieChartView) findViewById(R.id.chart);
         chart.setOnValueTouchListener(new ValueTouchListener());//添加点击事件
         chart.setCircleFillRatio(0.8f);//设置图所占整个view的比例  当有外面的数据时使用，防止数据显示不全
@@ -67,17 +72,27 @@ public class ChartActivity extends AppCompatActivity {
      * 生成数据
      */
     private void generateData() {
-        array = new float[]{sumIncomeCost(mList1),sumIncomeCost(mList2)};
+        array = new float[]{sumIncomeCost(mList1), sumIncomeCost(mList2)};
         int numValues = 2;//分成的块数
         List<SliceValue> values = new ArrayList<>();
-        for (int i = 0; i < numValues;i++ ) {
-            SliceValue sliceValue = new SliceValue(array[i], ChartUtils.pickColor());//每一块的值和颜色，图标根据值自动进行比例分配
+        int []color =new int[numValues];
+        for (int i = 0; i < numValues; i++) {
+            color[i]=ChartUtils.pickColor();
+            while(i==1)
+            {
+                if(color[i]==color[i-1])
+                color[i]=ChartUtils.pickColor();
+                else break;
+            }
+            SliceValue sliceValue = new SliceValue(array[i],color[i]);//每一块的值和颜色，图标根据值自动进行比例分配
             values.add(sliceValue);
         }
+        ivCt.setBackgroundColor(color[0]);
+        ivIn.setBackgroundColor(color[1]);
         data = new PieChartData(values);
         data.setHasLabels(true);//显示数据
         data.setHasLabelsOnlyForSelected(false);//不用点击显示占的百分比
-        data.setHasLabelsOutside(true);//占的百分比是否显示在饼图外面
+        data.setHasLabelsOutside(false);//占的百分比是否显示在饼图外面
         data.setHasCenterCircle(true);//是否是环形显示
         data.setCenterCircleScale(0.5f);////设置环形的大小级别
         data.setValueLabelBackgroundColor(Color.TRANSPARENT);////设置值得背景透明
@@ -104,8 +119,8 @@ public class ChartActivity extends AppCompatActivity {
         @Override
         public void onValueSelected(int arcIndex, SliceValue value) {
             if (arcIndex == 0)
-                showBottomSheetDialog("支出",mList1);
-            else showBottomSheetDialog("收入",mList2);
+                showBottomSheetDialog("支出", mList1);
+            else showBottomSheetDialog("收入", mList2);
         }
 
         @Override
@@ -114,7 +129,7 @@ public class ChartActivity extends AppCompatActivity {
         }
     }
 
-    public void showBottomSheetDialog(String str,List<IncomeCostBean> mList) {
+    public void showBottomSheetDialog(String str, List<IncomeCostBean> mList) {
         final BottomSheetDialog dialog = new BottomSheetDialog(this);
         View dialogView = LayoutInflater.from(this).inflate(R.layout.chart_bottom_list, null);
         TextView textView = (TextView) dialogView.findViewById(R.id.text_ic);

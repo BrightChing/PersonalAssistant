@@ -13,7 +13,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     private static final int VERSION = 1;
     //建表语句
     public static final String CREATE_COST = "create table cost(_id integer primary key autoincrement," +
-            "money real,source varchar(32),incomeCostType BOOL,incomeCostDate varchar(16)); ";
+            "money real,source varchar(32),incomeCostType integer,incomeCostDate varchar(16)); ";
 
     public static final String CREATE_NOTE = "create table notes(_id integer primary key " +
             "autoincrement,content text not null,time text not null); ";

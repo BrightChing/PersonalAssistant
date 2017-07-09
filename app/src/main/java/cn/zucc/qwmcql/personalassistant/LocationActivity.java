@@ -28,6 +28,7 @@ import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
 import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 
 import java.util.ArrayList;
@@ -39,7 +40,7 @@ public class LocationActivity extends AppCompatActivity {
 
     private TextView positionText;
 
-    private MapView mapView;
+    private TextureMapView mapView;
 
     private BaiduMap baiduMap;
 
@@ -66,7 +67,7 @@ public class LocationActivity extends AppCompatActivity {
             }
         });
 
-        mapView = (MapView) findViewById(R.id.bmapView);
+        mapView = (TextureMapView) findViewById(R.id.bmapView);
         View child = mapView.getChildAt(1);
         if (child != null && (child instanceof ImageView || child instanceof ZoomControls)){
             child.setVisibility(View.INVISIBLE);
