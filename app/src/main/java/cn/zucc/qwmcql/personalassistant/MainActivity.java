@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private FloatingActionButton fabNote;
     private RelativeLayout friend,timeLine;
     private IWXAPI api;
-    private static final int THUMB_SIZE = 150;
+    private static final int THUMB_SIZE = 200;
     private int mTargetScene =SendMessageToWX.Req.WXSceneSession;
 
     @Override
@@ -227,22 +227,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 @Override
                 public void onClick(View view) {
                     mTargetScene = SendMessageToWX.Req.WXSceneSession;
-                    shareWeChat();
+                    shareWeChatWeb();
                 }
             });
             timeLine.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     mTargetScene = SendMessageToWX.Req.WXSceneTimeline;
-                    shareWeChat();
+                    shareWeChatWeb();
                 }
             });
             builder.setTitle("分享到");
             builder.setView(dialog);
             builder.show();
-//            Intent intent = new Intent(MainActivity.this, ShareActivity.class);
-//            startActivity(intent);
-//            finish();
         } else if (id == R.id.nav_help) {
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);
@@ -259,11 +256,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    private void shareWeChat(){
+    private void shareWeChatWeb(){
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = "https://github.com/JohnChin/NoteMan/blob/master/README.md";
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "个人助理Assis";
+        msg.title = "个人助理Assis,一个关于生活的记录人";
         msg.description = "个人助理App";
         Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.bookshelf);
         Bitmap thumbBmp = Bitmap.createScaledBitmap(bmp,THUMB_SIZE, THUMB_SIZE, true);
@@ -285,14 +282,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (needRecycle) {
             bmp.recycle();
         }
-
         byte[] result = output.toByteArray();
         try {
             output.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return result;
     }
     private String buildTransaction(final String type) {

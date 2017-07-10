@@ -25,7 +25,7 @@
             android:paddingBottom="12dp"
             android:paddingLeft="72dp"
             android:paddingTop="12dp"
-            android:text="写入收支"
+            android:text="填写收支"
             android:textSize="20sp" />
 
         <ImageView
@@ -52,7 +52,7 @@
             android:paddingBottom="12dp"
             android:paddingLeft="72dp"
             android:paddingTop="12dp"
-            android:text="图表"
+            android:text="收支状况"
             android:textSize="20sp"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -64,7 +64,7 @@
             android:layout_height="24dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="12dp"
-            android:src="@drawable/ic_action_delete_grey" />
+            android:src="@drawable/ic_action_chart" />
     </RelativeLayout>
 
     <RelativeLayout

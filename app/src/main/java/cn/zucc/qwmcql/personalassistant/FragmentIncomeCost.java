@@ -1,6 +1,5 @@
 package cn.zucc.qwmcql.personalassistant;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,17 +10,13 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Field;
 import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.bean.IncomeCostBean;
@@ -47,7 +42,10 @@ public class FragmentIncomeCost extends Fragment {
                 R.layout.item_income_cost, mList) {
             @Override
             protected void convert(ViewHolder holder, IncomeCostBean incomeCostBean) {
-                holder.setImageResource(R.id.income_cost_iv, R.drawable.bookshelf);
+                if(incomeCostBean.getMoney()<0)
+                holder.setImageResource(R.id.income_cost_iv, R.drawable.android_pay);
+                else
+                    holder.setImageResource(R.id.income_cost_iv, R.drawable.android_income);
                 holder.setText(R.id.source, incomeCostBean.getSource());
                 holder.setText(R.id.ic_money, String.valueOf(incomeCostBean.getMoney()));
                 holder.setText(R.id.income_cost_date, incomeCostBean.getIncomeCostDate());

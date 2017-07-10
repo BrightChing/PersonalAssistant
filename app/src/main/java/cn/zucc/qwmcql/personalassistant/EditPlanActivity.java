@@ -69,9 +69,7 @@ public class EditPlanActivity extends Activity {
         currPlan = (SchedulePlan) getIntent().getSerializableExtra("plan");
         etNoteLayout.setVisibility(View.VISIBLE);
         etNoteTitle.setText(currPlan.getTitle());
-//        etNoteTitle.setEnabled(false);
         etNoteTitle.setInputType(InputType.TYPE_NULL);
-//        postScript.setEnabled(false);
         postScript.setText(currPlan.getPostScript());
         postScript.setInputType(InputType.TYPE_NULL);
         postScript.setHorizontallyScrolling(false);
@@ -98,7 +96,6 @@ public class EditPlanActivity extends Activity {
         timePicker.setVisibility(View.VISIBLE);
         timePicker.setEnabled(true);
         timeShower.setVisibility(View.GONE);
-//        timePicker.setIs24HourView(Boolean.TRUE);
         timePicker.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
             @Override
             public void onTimeChanged(TimePicker timePicker, int hour, int minutes) {
@@ -115,11 +112,8 @@ public class EditPlanActivity extends Activity {
         btnEdit.setVisibility(View.GONE);
         timePicker.setCurrentHour(Integer.valueOf(currPlan.getHour()));
         timePicker.setCurrentMinute(Integer.valueOf(currPlan.getMinutes()));
-//        timePicker.setIs24HourView(Boolean.TRUE);
         timePicker.setVisibility(View.VISIBLE);
         etNoteTitle.setInputType(InputType.TYPE_CLASS_TEXT);
-//        etNoteTitle.setEnabled(true);
-//        postScript.setEnabled(true);
         postScript.setInputType(InputType.TYPE_TEXT_FLAG_IME_MULTI_LINE);
         postScript.setHorizontallyScrolling(false);
         postScript.setLines(5);

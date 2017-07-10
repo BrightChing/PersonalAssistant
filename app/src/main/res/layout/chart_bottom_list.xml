@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:orientation="vertical"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary"
+        >
 
         <TextView
             android:id="@+id/text_ic"
@@ -17,7 +18,8 @@
             android:gravity="center"
             android:text="支出"
             android:textSize="18sp"
-            android:textColor="@color/White"/>
+            android:textColor="@color/White"
+            android:elevation="2dp"/>
     </LinearLayout>
 
     <LinearLayout

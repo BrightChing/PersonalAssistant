@@ -10,12 +10,13 @@
     android:id="@+id/share_friends"
     android:orientation="horizontal"
     android:layout_weight="0.5"
-    android:layout_marginTop="16dp">
+    android:layout_marginTop="16dp"
+    android:clickable="true">
 
     <ImageView
         android:id="@+id/weChatLogo"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_gravity="center"
         android:src="@drawable/w1"
         android:layout_alignParentTop="true"
@@ -35,11 +36,12 @@
         android:id="@+id/share_timeline"
         android:orientation="horizontal"
         android:layout_weight="0.5"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="16dp"
+        android:clickable="true">
         <ImageView
             android:id="@+id/TimeLineLogo"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:layout_gravity="center"
             android:src="@drawable/w2"
             android:layout_alignParentTop="true"

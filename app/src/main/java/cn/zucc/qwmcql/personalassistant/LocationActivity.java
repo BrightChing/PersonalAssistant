@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.opengl.GLSurfaceView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -50,6 +51,7 @@ public class LocationActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         mLocationClient = new LocationClient(getApplicationContext());
         mLocationClient.registerLocationListener(new MyLocationListener());
         SDKInitializer.initialize(getApplicationContext());
@@ -101,7 +103,10 @@ public class LocationActivity extends AppCompatActivity {
             }
         });
 
+//        GLSurfaceView gLSurfaceView = null;
+//        gLSurfaceView.setEGLConfigChooser(8,8,8,8,16,0);
     }
+
 
     private void navigateTo(BDLocation location) {
         if (isFirstLocate) {

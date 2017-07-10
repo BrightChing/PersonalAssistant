@@ -1,5 +1,6 @@
 package cn.zucc.qwmcql.personalassistant;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
@@ -7,11 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -66,6 +67,17 @@ public class ChartActivity extends AppCompatActivity {
         chart = (PieChartView) findViewById(R.id.chart);
         chart.setOnValueTouchListener(new ValueTouchListener());//添加点击事件
         chart.setCircleFillRatio(0.8f);//设置图所占整个view的比例  当有外面的数据时使用，防止数据显示不全
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_chart);
+        toolbar.setTitle("收支状况");
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.ic_action_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(ChartActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     /**
@@ -104,7 +116,7 @@ public class ChartActivity extends AppCompatActivity {
         }
 
         if (hasCenterText1) {
-            data.setCenterText1("收支比!");
+            data.setCenterText1("收支情况");
             data.setCenterText1FontSize(18);
             data.setCenterText1Color(Color.BLACK);////设置值得颜色*/
         }
@@ -142,6 +154,7 @@ public class ChartActivity extends AppCompatActivity {
                 R.layout.item_income_cost, mList) {
             @Override
             protected void convert(ViewHolder holder, IncomeCostBean incomeCostBean) {
+
                 holder.setImageResource(R.id.income_cost_iv, R.drawable.bookshelf);
                 holder.setText(R.id.source, incomeCostBean.getSource());
                 holder.setText(R.id.ic_money, String.valueOf(incomeCostBean.getMoney()));
