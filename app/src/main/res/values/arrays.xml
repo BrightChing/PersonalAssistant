@@ -4,4 +4,15 @@
         <item>支出</item>
         <item>收入</item>
     </string-array>
+    <string-array name="type_spinner">
+        <item>活期</item>
+        <item>定期</item>
+    </string-array>
+    <string-array name="year_spinner">
+        <item>半年</item>
+        <item>一年</item>
+        <item>两年</item>
+        <item>五年</item>
+        <item>十年</item>
+    </string-array>
 </resources>

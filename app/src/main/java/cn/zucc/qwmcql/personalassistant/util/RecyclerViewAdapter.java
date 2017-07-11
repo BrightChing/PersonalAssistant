@@ -19,7 +19,7 @@ import java.util.List;
 public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context mContext;//上下文
     private int mLayoutId;//布局id
-    private List<T> mDatas;//数据源
+    private List<T> mData;//数据源
     private LayoutInflater mInflater; //布局器
     private OnItemClickListener mClickListener;//点击事件监听器
     private OnItemLongClickListener mLongClickListener;//长按监听器
@@ -41,7 +41,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
         mContext = context;
         mInflater = LayoutInflater.from(context);
         mLayoutId = layoutId;
-        mDatas = datas;
+        mData = datas;
     }
 
 
@@ -75,14 +75,14 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        convert(holder, mDatas.get(position));
+        convert(holder, mData.get(position));
     }
 
     protected abstract void convert(ViewHolder holder, T t);
 
     @Override
     public int getItemCount() {
-        return mDatas == null ? 0 : mDatas.size();
+        return mData == null ? 0 : mData.size();
     }
 
     /**
@@ -122,7 +122,6 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
 
         /**
          * 取得一个RecyclerHolder对象
-         *
          * @param context  上下文
          * @param itemView 子项
          * @return 返回一个RecyclerHolder对象

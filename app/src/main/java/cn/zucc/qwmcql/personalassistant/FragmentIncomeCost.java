@@ -42,8 +42,8 @@ public class FragmentIncomeCost extends Fragment {
                 R.layout.item_income_cost, mList) {
             @Override
             protected void convert(ViewHolder holder, IncomeCostBean incomeCostBean) {
-                if(incomeCostBean.getMoney()<0)
-                holder.setImageResource(R.id.income_cost_iv, R.drawable.android_pay);
+                if (incomeCostBean.getIncomeCostType() == 0)
+                    holder.setImageResource(R.id.income_cost_iv, R.drawable.android_pay);
                 else
                     holder.setImageResource(R.id.income_cost_iv, R.drawable.android_income);
                 holder.setText(R.id.source, incomeCostBean.getSource());
@@ -84,9 +84,11 @@ public class FragmentIncomeCost extends Fragment {
     }
 
     /**
-     * 收支对话框
      *
+     * 收支对话框
      * @param title 对话框的标题
+     * @param cost 当修改收支时传入要修改的对象
+     * @param position 要修改对象的位置
      */
     private void incomeCostDialog(String title, final IncomeCostBean cost, final int position) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -218,6 +220,6 @@ public class FragmentIncomeCost extends Fragment {
 
     private void errorDialog(String str) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("提示").setPositiveButton("OK",null).setMessage(str).create().show();
+        builder.setTitle("提示").setPositiveButton("OK", null).setMessage(str).create().show();
     }
 }

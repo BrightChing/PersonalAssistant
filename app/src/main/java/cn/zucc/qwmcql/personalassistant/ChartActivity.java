@@ -73,8 +73,6 @@ public class ChartActivity extends AppCompatActivity {
         toolbar.setNavigationIcon(R.drawable.ic_action_back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Intent intent = new Intent(ChartActivity.this, MainActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
