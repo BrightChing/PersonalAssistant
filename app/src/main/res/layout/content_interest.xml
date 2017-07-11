@@ -5,9 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="cn.zucc.qwmcql.personalassistant.InterestActivity">
-      >
-
+    tools:context=".InterestActivity">
         <Spinner
             android:id="@+id/type"
             android:layout_width="102dp"
@@ -38,8 +36,10 @@
             app:layout_constraintVertical_bias="0.0"
             android:layout_below="@+id/years"
             android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="128dp"
             android:layout_marginRight="16dp"
-            android:layout_marginLeft="128dp"/>
+            android:layout_marginLeft="128dp" />
 
         <Spinner
             android:id="@+id/years"
@@ -76,7 +76,7 @@
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="229dp"
+            android:layout_marginTop="57dp"
             android:background="@drawable/ripple_bg"
             android:text="计算"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -84,7 +84,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/interest_list"
             app:layout_constraintVertical_bias="0.983"
-            android:layout_alignParentTop="true"
+            android:layout_below="@+id/interest"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
@@ -122,12 +122,12 @@
     android:layout_below="@+id/button"
     android:layout_alignParentLeft="true"
     android:layout_alignParentStart="true"
-    android:layout_marginTop="47dp">
+    >
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/interest_list"
       android:layout_width="match_parent"
-      android:layout_height="match_parent" />
+      android:layout_height="237dp" />
 </LinearLayout>
 
 

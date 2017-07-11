@@ -2,14 +2,19 @@ package cn.zucc.qwmcql.personalassistant;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.icu.text.DateIntervalFormat;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +22,11 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParseException;
+import java.text.ParsePosition;
+import java.util.Date;
 import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.bean.IncomeCostBean;
@@ -84,10 +94,10 @@ public class FragmentIncomeCost extends Fragment {
     }
 
     /**
-     *
      * 收支对话框
-     * @param title 对话框的标题
-     * @param cost 当修改收支时传入要修改的对象
+     *
+     * @param title    对话框的标题
+     * @param cost     当修改收支时传入要修改的对象
      * @param position 要修改对象的位置
      */
     private void incomeCostDialog(String title, final IncomeCostBean cost, final int position) {
@@ -104,6 +114,7 @@ public class FragmentIncomeCost extends Fragment {
         final AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
                 IncomeCostBean incomeCostBean = checkIncomeCost(viewDialog);
@@ -171,7 +182,8 @@ public class FragmentIncomeCost extends Fragment {
         return n;
     }
 
-    private IncomeCostBean checkIncomeCost(View view) {
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private IncomeCostBean checkIncomeCost(View view){
         DatePicker datePicker = (DatePicker) view.findViewById(R.id.datePicker);
         TextView money = (TextView) view.findViewById(R.id.money);
         TextView source = (TextView) view.findViewById(R.id.source);
@@ -180,6 +192,17 @@ public class FragmentIncomeCost extends Fragment {
         String m = n > 9 ? n + "" : "0" + n;
         n = datePicker.getDayOfMonth();
         String d = n > 9 ? n + "" : "0" + n;
+        int y = datePicker.getYear();
+        String date = y + "-" + m + "-" + d;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            if (new Date().compareTo(simpleDateFormat.parse(date)) < 0) {
+                errorDialog("您写入的时间不合法，写了未来的某个时间");
+                return null;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         if ("".equals(source.getText().toString())) {
             errorDialog("请输入收支备注(来源)");
             return null;
@@ -197,7 +220,7 @@ public class FragmentIncomeCost extends Fragment {
             cost.setMoney(Float.parseFloat(money.getText().toString()));
         }
         cost.setSource(source.getText().toString());
-        cost.setIncomeCostDate(datePicker.getYear() + "-" + m + "-" + d);
+        cost.setIncomeCostDate(date);
         return cost;
     }
 
