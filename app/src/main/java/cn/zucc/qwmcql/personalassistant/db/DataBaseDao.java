@@ -32,6 +32,8 @@ public class DataBaseDao {
 
     }
 
+    //收支
+
     public void addIncomeCost(IncomeCostBean incomeCostBean) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
@@ -111,6 +113,16 @@ public class DataBaseDao {
         return list;
     }
 
+    public int getIncomeCostId(){
+        String sql="select * from cost order by _id desc limit 0,1";
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.rawQuery(sql,null);
+        cursor.moveToNext();
+        return cursor.getInt(cursor.getColumnIndex("_id"));
+    }
+
+    //日程
+
     public void addSchedulePlan(SchedulePlan plan) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -180,11 +192,34 @@ public class DataBaseDao {
         db.close();
     }
 
+    public ArrayList<SchedulePlan> searchByIndistinct(String title) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor cursor = db.query("plan", new String[]{"_id", "date", "title", "hour", "minutes", "postscript"},
+                "title like '%" + title + "%'" + " or postscript like '%" + title + "%'", null, null, null, "_id asc");
+        ArrayList<SchedulePlan> list = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            SchedulePlan plan = new SchedulePlan();
+            plan.setId(cursor.getInt(cursor.getColumnIndex("_id")));
+            plan.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+            plan.setDate(cursor.getString(cursor.getColumnIndex("date")));
+            plan.setHour(cursor.getString(cursor.getColumnIndex("hour")));
+            plan.setMinutes(cursor.getString(cursor.getColumnIndex("minutes")));
+            plan.setPostScript(cursor.getString(cursor.getColumnIndex("postscript")));
+            list.add(plan);
+        }
+        db.close();
+        cursor.close();
+        return list;
+    }
+
+    //笔记
+
     public void addNote(NoteBean note) {
         SQLiteDatabase db = helper.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put("content", note.getContent());
         cv.put("time", note.getTime());
+        cv.put("path",note.getPath());
         db.insert("notes", null, cv);
         db.close();
     }
@@ -218,32 +253,5 @@ public class DataBaseDao {
         db.close();
         cur.close();
         return list;
-    }
-
-    public ArrayList<SchedulePlan> searchByIndistinct(String title) {
-        SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.query("plan", new String[]{"_id", "date", "title", "hour", "minutes", "postscript"},
-                "title like '%" + title + "%'" + " or postscript like '%" + title + "%'", null, null, null, "_id asc");
-        ArrayList<SchedulePlan> list = new ArrayList<>();
-        while (cursor.moveToNext()) {
-            SchedulePlan plan = new SchedulePlan();
-            plan.setId(cursor.getInt(cursor.getColumnIndex("_id")));
-            plan.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-            plan.setDate(cursor.getString(cursor.getColumnIndex("date")));
-            plan.setHour(cursor.getString(cursor.getColumnIndex("hour")));
-            plan.setMinutes(cursor.getString(cursor.getColumnIndex("minutes")));
-            plan.setPostScript(cursor.getString(cursor.getColumnIndex("postscript")));
-            list.add(plan);
-        }
-        db.close();
-        cursor.close();
-        return list;
-    }
-    public int getIncomeCostId(){
-       String sql="select * from cost order by _id desc limit 0,1";
-        SQLiteDatabase db = helper.getWritableDatabase();
-        Cursor cursor = db.rawQuery(sql,null);
-        cursor.moveToNext();
-        return cursor.getInt(cursor.getColumnIndex("_id"));
     }
 }

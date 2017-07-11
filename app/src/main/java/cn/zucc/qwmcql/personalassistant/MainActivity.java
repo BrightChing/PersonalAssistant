@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -28,6 +29,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -109,8 +111,28 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         fabNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
-                startActivity(intent);
+                final BottomSheetDialog dialog = new BottomSheetDialog(MainActivity.this);
+                View dialogView = LayoutInflater.from(MainActivity.this).inflate(R.layout.bottom_sheet_noteplus, null);
+                TextView tvText = (TextView) dialogView.findViewById(R.id.tv_textNote);
+                TextView tvPic = (TextView) dialogView.findViewById(R.id.tv_picNote);
+                tvText.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+                            intent.putExtra("flag",1);
+                        startActivity(intent);
+                    }
+                });
+                tvPic.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+                        intent.putExtra("flag",2);
+                        startActivity(intent);
+                    }
+                });
+                dialog.setContentView(dialogView);
+                dialog.show();
             }
         });
 
@@ -249,6 +271,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             finish();
         }else if(id==R.id.nav_location){
+            Intent intent = new Intent(MainActivity.this, LocationActivity.class);
+            startActivity(intent);
+        }
+        else  if(id==R.id.nav_interest){
             Intent intent = new Intent(MainActivity.this, LocationActivity.class);
             startActivity(intent);
         }

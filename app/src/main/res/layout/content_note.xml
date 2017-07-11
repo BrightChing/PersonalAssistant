@@ -34,19 +34,35 @@
                 android:layout_margin="@dimen/text_margin"
                 android:textColor="#757575"
                 android:textSize="14sp" />
+
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:background="#BDBDBD" />
-
+            android:background="#BDBDBD"
+            android:layout_marginBottom="16dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="128dp"
+            android:layout_gravity="center|top"
+            android:id="@+id/contentImg"
+            android:src="@drawable/nopic"
+            />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#BDBDBD"
+            android:layout_marginTop="16dp"
+            android:id="@+id/lineX"
+            />
         <TextView
             android:id="@+id/content_text"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/text_margin"
             android:textColor="#212121"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            />
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

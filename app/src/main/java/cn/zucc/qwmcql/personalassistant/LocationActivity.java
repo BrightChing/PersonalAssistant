@@ -3,8 +3,6 @@ package cn.zucc.qwmcql.personalassistant;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Location;
-import android.opengl.GLSurfaceView;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,7 +13,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ZoomControls;
 
@@ -27,7 +24,6 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.MapStatusUpdate;
 import com.baidu.mapapi.map.MapStatusUpdateFactory;
-import com.baidu.mapapi.map.MapView;
 import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
@@ -39,8 +35,6 @@ public class LocationActivity extends AppCompatActivity {
 
     public LocationClient mLocationClient;
 
-    private TextView positionText;
-
     private TextureMapView mapView;
 
     private BaiduMap baiduMap;
@@ -48,6 +42,7 @@ public class LocationActivity extends AppCompatActivity {
     private boolean isFirstLocate = true;
 
     private CoordinatorLayout coor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,7 +51,7 @@ public class LocationActivity extends AppCompatActivity {
         mLocationClient.registerLocationListener(new MyLocationListener());
         SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_location);
-        coor=(CoordinatorLayout)findViewById(R.id.coor_location);
+        coor = (CoordinatorLayout) findViewById(R.id.coor_location);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbarLocation);
         toolbar.setTitle("地图");
         setSupportActionBar(toolbar);
@@ -71,12 +66,11 @@ public class LocationActivity extends AppCompatActivity {
 
         mapView = (TextureMapView) findViewById(R.id.bmapView);
         View child = mapView.getChildAt(1);
-        if (child != null && (child instanceof ImageView || child instanceof ZoomControls)){
+        if (child != null && (child instanceof ImageView || child instanceof ZoomControls)) {
             child.setVisibility(View.INVISIBLE);
         }//隐藏百度LOGO
         baiduMap = mapView.getMap();
         baiduMap.setMyLocationEnabled(true);
-        positionText = (TextView) findViewById(R.id.position_text_view);
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(LocationActivity.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);
@@ -88,7 +82,7 @@ public class LocationActivity extends AppCompatActivity {
             permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
         }
         if (!permissionList.isEmpty()) {
-            String [] permissions = permissionList.toArray(new String[permissionList.size()]);
+            String[] permissions = permissionList.toArray(new String[permissionList.size()]);
             ActivityCompat.requestPermissions(LocationActivity.this, permissions, 1);
         } else {
             requestLocation();
@@ -98,19 +92,16 @@ public class LocationActivity extends AppCompatActivity {
         fabLoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                isFirstLocate=true;
+                isFirstLocate = true;
                 requestLocation();
             }
         });
-
-//        GLSurfaceView gLSurfaceView = null;
-//        gLSurfaceView.setEGLConfigChooser(8,8,8,8,16,0);
     }
 
 
     private void navigateTo(BDLocation location) {
         if (isFirstLocate) {
-            Snackbar.make(coor,"你的位置:" + location.getAddrStr(), Snackbar.LENGTH_LONG).show();
+            Snackbar.make(coor, "你的位置:" + location.getAddrStr(), Snackbar.LENGTH_LONG).show();
             LatLng ll = new LatLng(location.getLatitude(), location.getLongitude());
             MapStatusUpdate update = MapStatusUpdateFactory.newLatLng(ll);
             baiduMap.animateMapStatus(update);
@@ -132,7 +123,7 @@ public class LocationActivity extends AppCompatActivity {
         mLocationClient.start();
     }
 
-    private void initLocation(){
+    private void initLocation() {
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(1000);
         option.setIsNeedLocationDescribe(true);

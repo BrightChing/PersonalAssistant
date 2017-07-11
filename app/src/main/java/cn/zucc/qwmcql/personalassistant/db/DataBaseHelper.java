@@ -16,8 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             "money real,source varchar(32),incomeCostType integer,incomeCostDate varchar(16)); ";
 
     public static final String CREATE_NOTE = "create table notes(_id integer primary key " +
-            "autoincrement,content text not null,time text not null); ";
-
+            "autoincrement,content text not null,time text not null,path text); ";
     public static final String CREATE_PLAN = "CREATE TABLE plan(_id integer primary key autoincrement," +
             "date varchar(10),title varchar(10),hour varchar(10),minutes varchar(10),postscript varchar(10))";
 

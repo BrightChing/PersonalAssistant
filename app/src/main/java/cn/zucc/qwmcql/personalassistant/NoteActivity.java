@@ -6,7 +6,10 @@ package cn.zucc.qwmcql.personalassistant;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -18,8 +21,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.io.File;
 
 import cn.zucc.qwmcql.personalassistant.bean.NoteBean;
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
@@ -30,6 +36,9 @@ public class NoteActivity extends AppCompatActivity {
     private LinearLayout linearLayout;
     private NoteBean note;
     CoordinatorLayout container;
+    private ImageView imgContent;
+    private File phoneFile;
+    private View line;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +55,10 @@ public class NoteActivity extends AppCompatActivity {
                 finish();
             }
         });
+        intView();
+    }
 
+    private void intView() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,10 +69,19 @@ public class NoteActivity extends AppCompatActivity {
 
         s_tv = (TextView) findViewById(R.id.content_text);
         t_tv = (TextView) findViewById(R.id.textView1);
+        line = (View) findViewById(R.id.lineX);
         linearLayout = (LinearLayout) findViewById(R.id.lay1);
+        imgContent = (ImageView) findViewById(R.id.contentImg);
         note = (NoteBean) getIntent().getSerializableExtra("note");
         s_tv.setText(note.getContent());
         t_tv.setText(note.getTime());
+        if (!note.getPath().equals(null+"")) {
+            Bitmap bitmap = BitmapFactory.decodeFile(note.getPath());
+            imgContent.setImageBitmap(bitmap);
+        }
+        else
+            imgContent.setImageResource(R.drawable.nopic);
+
         linearLayout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {

@@ -10,6 +10,7 @@ public class NoteBean implements Serializable{
     private String content;
     private int id;
     private String time;
+    private String path;
 
     public String getContent() {
         return content;
@@ -33,5 +34,12 @@ public class NoteBean implements Serializable{
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getPath(){
+        return path;
+    }
+    public void setPath(String path){
+        this.path=path;
     }
 }

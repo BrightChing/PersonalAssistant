@@ -60,6 +60,7 @@ public class FragmentNoteList extends Fragment implements CardsAdapter.InnerItem
                 note.setId(cursor.getInt(cursor.getColumnIndex("_id")));
                 note.setContent(cursor.getString(cursor.getColumnIndex("content")));
                 note.setTime(cursor.getString(cursor.getColumnIndex("time")));
+                note.setPath(cursor.getString(cursor.getColumnIndex("path")));
                 intent.putExtra("note", note);
                 startActivity(intent);
                 mActivity.finish();

@@ -43,6 +43,10 @@
                 android:id="@+id/nav_serach"
                 android:title="搜索日程"
                 android:icon="@drawable/ic_search_black_24dp"/>
+            <item
+                android:id="@+id/nav_interest"
+                android:title="个人理财"
+                android:icon="@drawable/ic_payment_black_24dp"/>
         </menu>
     </item>
 

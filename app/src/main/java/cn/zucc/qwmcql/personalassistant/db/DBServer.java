@@ -37,6 +37,11 @@ public class DBServer {
         return dataBaseDao.searchSchedulePlanById(id);
     }
 
+    public static ArrayList<SchedulePlan> searchByIndistinct(Context context, String plan) {
+        DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
+        return dataBaseDao.searchByIndistinct(plan);
+    }
+
     //笔记数据操作
     public static void addNote(Context context, NoteBean note) {
         DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
@@ -58,10 +63,6 @@ public class DBServer {
         dataBaseDao.searchNote();
     }
 
-    public static ArrayList<SchedulePlan> searchByIndistinct(Context context, String plan) {
-        DataBaseDao dataBaseDao = DataBaseDao.getInstance(context);
-        return dataBaseDao.searchByIndistinct(plan);
-    }
 
     //取得收支的id
     public static int getIncomeCostId(Context context) {
