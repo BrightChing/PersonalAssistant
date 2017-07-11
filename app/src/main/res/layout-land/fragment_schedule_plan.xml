@@ -37,30 +37,30 @@
             android:id="@+id/lv1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clipToPadding="false"
-            android:divider="@null"
-            android:scrollbarStyle="outsideOverlay"
+            android:layout_above="@+id/adddate"
             android:layout_alignLeft="@+id/txv"
             android:layout_alignStart="@+id/txv"
             android:layout_below="@+id/txv"
-            android:layout_above="@+id/adddate" />
+            android:clipToPadding="false"
+            android:divider="@null"
+            android:scrollbarStyle="outsideOverlay" />
 
         <View
+            android:id="@+id/view3"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="96dp"
-            android:background="#BDBDBD"
-            android:id="@+id/view3" />
+            android:background="#BDBDBD" />
 
         <RelativeLayout
             android:id="@+id/adddate"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:layout_alignParentBottom="true"
             android:layout_alignLeft="@+id/lv1"
+            android:layout_alignParentBottom="true"
             android:layout_alignStart="@+id/lv1"
+            android:layout_gravity="bottom"
             android:layout_marginBottom="48dp">
 
             <ImageButton
@@ -74,9 +74,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="16dp"
                 android:layout_toEndOf="@+id/imb1"
+                android:layout_toRightOf="@+id/imb1"
                 android:text="添加新的日程"
                 android:textSize="16sp" />
         </RelativeLayout>

@@ -44,7 +44,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".anime.AnimeActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait"/>
         <activity android:name=".SettingActivity" />
         <activity
             android:name=".EditPlanActivity"
@@ -70,7 +70,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="Cf72IOF3Om6SjsX2LIibryGKr8AbbMcW" />
 
-        <activity android:name=".ChartActivity"></activity>
+        <activity android:name=".ChartActivity"/>
 
         <receiver
             android:name=".wechat.AppRegister"
@@ -82,7 +82,7 @@
 
         <activity
             android:name=".wechat.WXEntryActivity"
-            android:exported="true"></activity>
+            android:exported="true"/>
         <activity android:name=".InterestActivity" />
     </application>
 </manifest>

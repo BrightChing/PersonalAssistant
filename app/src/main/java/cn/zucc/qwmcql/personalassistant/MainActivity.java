@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -27,11 +28,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
 import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
@@ -45,8 +44,6 @@ import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.anime.DepthPageTransformer;
 import cn.zucc.qwmcql.personalassistant.wechat.Constants;
-
-import static com.tencent.mm.opensdk.modelmsg.SendMessageToWX.Req.WXSceneTimeline;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private TabLayout mTabLayout;
@@ -166,11 +163,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onPageScrollStateChanged(int arg0) {
-                if (arg0 == 0) {
-                } else if (arg0 == 1) {
-
-                } else if (arg0 == 2) {
-                }
             }
         });
     }
@@ -224,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
@@ -266,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Intent intent = new Intent(MainActivity.this, HelpActivity.class);
             startActivity(intent);
             finish();
-        } else if (id == R.id.nav_serach) {
+        } else if (id == R.id.nav_search) {
             Intent intent = new Intent(MainActivity.this, SearchActivity.class);
             startActivity(intent);
             finish();

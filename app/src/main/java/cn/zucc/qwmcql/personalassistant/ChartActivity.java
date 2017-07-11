@@ -1,11 +1,10 @@
 package cn.zucc.qwmcql.personalassistant;
 
-import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -85,16 +84,15 @@ public class ChartActivity extends AppCompatActivity {
         array = new float[]{sumIncomeCost(mList1), sumIncomeCost(mList2)};
         int numValues = 2;//分成的块数
         List<SliceValue> values = new ArrayList<>();
-        int []color =new int[numValues];
+        int[] color = new int[numValues];
         for (int i = 0; i < numValues; i++) {
-            color[i]=ChartUtils.pickColor();
-            while(i==1)
-            {
-                if(color[i]==color[i-1])
-                color[i]=ChartUtils.pickColor();
+            color[i] = ChartUtils.pickColor();
+            while (i == 1) {
+                if (color[i] == color[i - 1])
+                    color[i] = ChartUtils.pickColor();
                 else break;
             }
-            SliceValue sliceValue = new SliceValue(array[i],color[i]);//每一块的值和颜色，图标根据值自动进行比例分配
+            SliceValue sliceValue = new SliceValue(array[i], color[i]);//每一块的值和颜色，图标根据值自动进行比例分配
             values.add(sliceValue);
         }
         ivCt.setBackgroundColor(color[0]);

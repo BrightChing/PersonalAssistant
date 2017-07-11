@@ -83,12 +83,9 @@ public class EditNoteActivity extends AppCompatActivity {
         });
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
-        if (flag == 1) {
-
-        } else if (flag == 2) {
+      if (flag == 2) {
             Camera();
         }
-
     }
 
     private void addNote() {

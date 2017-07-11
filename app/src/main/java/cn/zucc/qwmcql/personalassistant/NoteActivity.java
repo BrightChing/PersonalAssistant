@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -69,7 +68,7 @@ public class NoteActivity extends AppCompatActivity {
 
         s_tv = (TextView) findViewById(R.id.content_text);
         t_tv = (TextView) findViewById(R.id.textView1);
-        line = (View) findViewById(R.id.lineX);
+        line = findViewById(R.id.lineX);
         linearLayout = (LinearLayout) findViewById(R.id.lay1);
         imgContent = (ImageView) findViewById(R.id.contentImg);
         note = (NoteBean) getIntent().getSerializableExtra("note");

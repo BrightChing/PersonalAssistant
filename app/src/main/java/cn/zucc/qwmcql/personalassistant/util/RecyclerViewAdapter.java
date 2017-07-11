@@ -117,7 +117,7 @@ public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<Recycl
             super(itemView);
             mContext = context;
             mConvertView = itemView;
-            mViews = new SparseArray<View>();
+            mViews = new SparseArray<>();
         }
 
         /**

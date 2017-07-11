@@ -3,14 +3,10 @@ package cn.zucc.qwmcql.personalassistant.wechat;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
-
 
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
-
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
@@ -43,10 +39,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 	}
 	@Override
 	public void onResp(BaseResp resp) {
-		int result = 0;
-
+		int result;
 		Toast.makeText(this, "baseresp.getType = " + resp.getType(), Toast.LENGTH_SHORT).show();
-
 		switch (resp.errCode) {
 			case BaseResp.ErrCode.ERR_OK:
 				result = R.string.errcode_success;

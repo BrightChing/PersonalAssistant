@@ -1,5 +1,4 @@
 package cn.zucc.qwmcql.personalassistant.anime;
-
 /**
  * Created by My PC on 2017/5/21.
  */
@@ -18,7 +17,6 @@ import cn.zucc.qwmcql.personalassistant.R;
 
 
 public class AnimeActivity extends AppCompatActivity {
-    private ImageView iv_start;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +29,7 @@ public class AnimeActivity extends AppCompatActivity {
     }
 
     private void initImage() {
-        iv_start = (ImageView) findViewById(R.id.iv_start);
+        ImageView iv_start = (ImageView) findViewById(R.id.iv_start);
         iv_start.setImageResource(R.drawable.anime);
         ScaleAnimation scaleAnimation = new ScaleAnimation(1.4f, 1.0f, 1.4f, 1.0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
         scaleAnimation.setDuration(4000);

@@ -75,7 +75,7 @@ public class EditPlanActivity extends Activity {
         postScript.setHorizontallyScrolling(false);
         postScript.setLines(5);
         timePicker.setVisibility(View.GONE);
-        if (Integer.valueOf(currPlan.getMinutes()).intValue() < 10) {
+        if (Integer.valueOf(currPlan.getMinutes())< 10) {
             timeShower.setText(currPlan.getHour() + ":0" + currPlan.getMinutes());
         } else
             timeShower.setText(currPlan.getHour() + ":" + currPlan.getMinutes());

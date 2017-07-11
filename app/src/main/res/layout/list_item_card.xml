@@ -33,7 +33,9 @@
                 android:layout_toStartOf="@+id/list_item_card_text"
                 android:background="@drawable/ic_action_note"
                 android:padding="12dp"
-                android:paddingLeft="32dp" />
+                android:paddingLeft="32dp"
+                android:layout_marginRight="12dp"
+                android:layout_toLeftOf="@+id/list_item_card_text" />
 
             <TextView
                 android:id="@+id/list_item_card_text"
@@ -47,7 +49,8 @@
                 android:padding="8dp"
                 android:text="google"
                 android:textColor="#c4000000"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:layout_alignLeft="@+id/timetext" />
 
             <TextView
                 android:id="@+id/timetext"
@@ -60,7 +63,8 @@
                 android:padding="8dp"
                 android:text="hello_world"
                 android:textColor="#89000000"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                android:layout_alignParentLeft="true" />
         </RelativeLayout>
 
     </android.support.v7.widget.CardView>
