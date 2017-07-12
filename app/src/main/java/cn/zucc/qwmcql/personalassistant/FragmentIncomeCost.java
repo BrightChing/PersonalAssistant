@@ -231,7 +231,7 @@ public class FragmentIncomeCost extends Fragment {
                 money.setText(String.valueOf(cost.getMoney()));
             source.setText(cost.getSource());
             String[] str = cost.getIncomeCostDate().split("-");
-            datePicker.updateDate(Integer.valueOf(str[0]), Integer.valueOf(str[1]), Integer.valueOf(str[2]));
+            datePicker.updateDate(Integer.valueOf(str[0]), Integer.valueOf(str[1])-1, Integer.valueOf(str[2]));
             spinner.setSelection(cost.getIncomeCostType());
         }
     }
