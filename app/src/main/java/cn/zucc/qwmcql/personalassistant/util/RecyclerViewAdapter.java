@@ -12,9 +12,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * Created by angelroot on 2017/5/31.
- */
+
 
 public abstract class RecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
     private Context mContext;//上下文

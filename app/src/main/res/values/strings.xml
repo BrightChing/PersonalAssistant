@@ -29,4 +29,5 @@
     <string name="errcode_unknown">发送返回</string>
     <string name="picNote">图片笔记</string>
     <string name="textNote">文字笔记</string>
+    <string name="everyDay">每天</string>
 </resources>

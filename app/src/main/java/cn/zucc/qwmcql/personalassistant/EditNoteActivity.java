@@ -3,7 +3,6 @@ package cn.zucc.qwmcql.personalassistant;
 /**
  * Created by My PC on 2017/5/22.
  */
-
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -21,10 +20,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import cn.zucc.qwmcql.personalassistant.bean.NoteBean;
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
@@ -52,6 +54,7 @@ public class EditNoteActivity extends AppCompatActivity {
                 finish();
             }
         });
+
         intView();
     }
 

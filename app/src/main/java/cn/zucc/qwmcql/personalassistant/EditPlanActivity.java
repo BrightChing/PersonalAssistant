@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.view.View;
 import android.view.Window;
@@ -32,7 +33,7 @@ import cn.zucc.qwmcql.personalassistant.db.DBServer;
 import cn.zucc.qwmcql.personalassistant.bean.SchedulePlan;
 import cn.zucc.qwmcql.personalassistant.alarm.*;
 
-public class EditPlanActivity extends Activity {
+public class EditPlanActivity extends AppCompatActivity {
 
     private RelativeLayout etNoteLayout = null;
     private EditText etNoteTitle = null;
@@ -45,7 +46,8 @@ public class EditPlanActivity extends Activity {
     private ImageButton imageButton;
     private TimePicker timePicker;
     private TextView dateTitle, picker, timeShower, postScript;
-    private CheckBox checkBox,checkBox1;
+    private CheckBox checkBox;
+    private CheckBox checkBoxDay;
     private int hour, minutes,flag=0;
 
     @Override
@@ -89,7 +91,7 @@ public class EditPlanActivity extends Activity {
         dateTitle.setVisibility(View.VISIBLE);
         picker.setVisibility(View.VISIBLE);
         checkBox.setEnabled(false);
-        checkBox1.setEnabled(false);
+        checkBoxDay.setEnabled(false);
     }
 
     private void showNewNoteUI() {
@@ -122,11 +124,12 @@ public class EditPlanActivity extends Activity {
         postScript.setHorizontallyScrolling(false);
         postScript.setLines(5);
         checkBox.setEnabled(true);
-        checkBox1.setEnabled(true);
+        checkBoxDay.setEnabled(true);
     }
 
 
     private void initView() {
+
         etNoteLayout = (RelativeLayout) findViewById(R.id.etNoteLayout);
         etNoteTitle = (EditText) findViewById(R.id.etNoteTitle);
         btnSave = (Button) findViewById(R.id.btnSave);
@@ -139,7 +142,7 @@ public class EditPlanActivity extends Activity {
         picker = (TextView) findViewById(R.id.datecontent);
         postScript = (TextView) findViewById(R.id.postEdit);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
-        checkBox1=(CheckBox)findViewById(R.id.dayCheck);
+        checkBoxDay = (CheckBox) findViewById(R.id.checkBox_Day);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -215,7 +218,7 @@ public class EditPlanActivity extends Activity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8")); // 这里时区需要设置一下，不然会有8个小时的时间差
-        if(!checkBox1.isChecked()){
+        if(!checkBoxDay.isChecked()){
             try {
                 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
                 Date date=sdf.parse(planDate);
@@ -224,6 +227,7 @@ public class EditPlanActivity extends Activity {
                 e.printStackTrace();
             }
         }
+
         calendar.set(Calendar.MINUTE, Integer.parseInt(currPlan.getMinutes()));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(currPlan.getHour()));
         calendar.set(Calendar.SECOND, 0);
