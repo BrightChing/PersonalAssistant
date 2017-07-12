@@ -22,7 +22,10 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import cn.zucc.qwmcql.personalassistant.db.DBServer;
@@ -42,8 +45,8 @@ public class EditPlanActivity extends Activity {
     private ImageButton imageButton;
     private TimePicker timePicker;
     private TextView dateTitle, picker, timeShower, postScript;
-    private CheckBox checkBox;
-    private int hour, minutes;
+    private CheckBox checkBox,checkBox1;
+    private int hour, minutes,flag=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +89,7 @@ public class EditPlanActivity extends Activity {
         dateTitle.setVisibility(View.VISIBLE);
         picker.setVisibility(View.VISIBLE);
         checkBox.setEnabled(false);
+        checkBox1.setEnabled(false);
     }
 
     private void showNewNoteUI() {
@@ -118,6 +122,7 @@ public class EditPlanActivity extends Activity {
         postScript.setHorizontallyScrolling(false);
         postScript.setLines(5);
         checkBox.setEnabled(true);
+        checkBox1.setEnabled(true);
     }
 
 
@@ -134,6 +139,7 @@ public class EditPlanActivity extends Activity {
         picker = (TextView) findViewById(R.id.datecontent);
         postScript = (TextView) findViewById(R.id.postEdit);
         checkBox = (CheckBox) findViewById(R.id.checkBox);
+        checkBox1=(CheckBox)findViewById(R.id.dayCheck);
 
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -161,6 +167,7 @@ public class EditPlanActivity extends Activity {
             @Override
             public void onClick(View arg0) {
                 showEditNoteUI();
+                flag = 1;
             }
         });
     }
@@ -176,16 +183,18 @@ public class EditPlanActivity extends Activity {
             currPlan.setHour(planHour);
             currPlan.setMinutes(planMinutes);
             currPlan.setPostScript(planPost);
-            if(planDate!=null&&!"".equals(planDate))
+            if(planDate!=null&&!"".equals(planDate)&&flag==0)
             {
                 currPlan.setDate(planDate);
-            DBServer.addPlan(this, currPlan);
+                DBServer.addPlan(this, currPlan);
             }
-            else
+            else{
                 DBServer.updatePlan(this,currPlan);
+            }
             AlarmSetting();
             EditPlanActivity.this.finish();
-        } else {
+        }
+        else {
             Toast.makeText(getApplicationContext(), R.string.empty, Toast.LENGTH_SHORT).show();
         }
     }
@@ -200,15 +209,23 @@ public class EditPlanActivity extends Activity {
         Intent intent = new Intent(EditPlanActivity.this, AlarmReceiver.class);
         intent.putExtra("planTitle", currPlan.getTitle());
         intent.putExtra("planId", currPlan.getId());
-
         PendingIntent sender = PendingIntent.getBroadcast(EditPlanActivity.this, currPlan.getId(), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         long firstTime = SystemClock.elapsedRealtime();    // 开机之后到现在的运行时间(包括睡眠时间)
         long systemTime = System.currentTimeMillis();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+8")); // 这里时区需要设置一下，不然会有8个小时的时间差
-        calendar.set(Calendar.MINUTE, minutes);
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        if(!checkBox1.isChecked()){
+            try {
+                SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+                Date date=sdf.parse(planDate);
+                calendar.setTime(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        calendar.set(Calendar.MINUTE, Integer.parseInt(currPlan.getMinutes()));
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(currPlan.getHour()));
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         // 选择的每天定时时间
@@ -216,7 +233,7 @@ public class EditPlanActivity extends Activity {
         // 如果当前时间大于设置的时间，那么就从第二天的设定时间开始
         if (systemTime > selectTime) {
             Toast.makeText(EditPlanActivity.this, "设置的时间小于当前时间", Toast.LENGTH_SHORT).show();
-            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            calendar.add(Calendar.DAY_OF_YEAR, 1);
             selectTime = calendar.getTimeInMillis();
         }
         // 计算现在时间到设定时间的时间差

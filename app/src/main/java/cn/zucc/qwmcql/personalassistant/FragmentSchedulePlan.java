@@ -119,6 +119,7 @@ public class FragmentSchedulePlan extends Fragment {
         Intent intent = new Intent(getActivity(), EditPlanActivity.class);
         intent.putExtra("uiType", "showPlan");
         intent.putExtra("plan", plan);
+        intent.putExtra("planDate", planDate);
         startActivity(intent);
     }
 

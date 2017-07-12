@@ -1,134 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".InterestActivity">
-        <Spinner
-            android:id="@+id/type"
-            android:layout_width="102dp"
-            android:layout_height="30dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InterestActivity"
+    tools:showIn="@layout/activity_insterest">
+    >
+    <Spinner
+        android:id="@+id/type"
+        android:layout_width="102dp"
+        android:layout_height="30dp"
+        android:entries="@array/type_spinner"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.727"
+        android:layout_alignTop="@+id/textView4"
+        android:layout_alignLeft="@+id/money"
+        android:layout_alignStart="@+id/money" />
 
-            android:entries="@array/type_spinner"
-            android:spinnerMode="dialog"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.727"
-            android:layout_alignBaseline="@+id/textView4"
-            android:layout_alignBottom="@+id/textView4"
-            android:layout_alignLeft="@+id/money"
-            android:layout_alignStart="@+id/money" />
+    <EditText
+        android:id="@+id/money"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_below="@+id/years"
+        android:layout_marginLeft="128dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.144"
+        app:layout_constraintLeft_toRightOf="@+id/textView3"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
-        <EditText
-            android:id="@+id/money"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:ems="10"
-            android:inputType="numberDecimal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.144"
-            app:layout_constraintLeft_toRightOf="@+id/textView3"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            android:layout_below="@+id/years"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="128dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="128dp" />
+    <Spinner
+        android:id="@+id/years"
+        android:layout_width="99dp"
+        android:layout_height="31dp"
+        android:layout_alignEnd="@+id/money"
+        android:layout_alignRight="@+id/money"
+        android:layout_alignTop="@+id/type"
+        android:entries="@array/year_spinner"
+        android:spinnerMode="dialog"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.728" />
 
-        <Spinner
-            android:id="@+id/years"
-            android:layout_width="99dp"
-            android:layout_height="31dp"
-            android:entries="@array/year_spinner"
-            android:spinnerMode="dialog"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.728"
-            android:layout_alignTop="@+id/type"
-            android:layout_alignRight="@+id/money"
-            android:layout_alignEnd="@+id/money" />
+    <TextView
+        android:id="@+id/interest"
+        android:layout_width="224dp"
+        android:layout_height="48dp"
+        android:layout_below="@+id/money"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="16dp"
+        android:gravity="center"
+        android:textSize="36sp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.984"
+        android:layout_above="@id/button"/>
 
-        <TextView
-            android:id="@+id/interest"
-            android:layout_width="224dp"
-            android:layout_height="47dp"
-            android:gravity="center"
-            android:textSize="30sp"
-            app:layout_constraintBottom_toTopOf="@+id/button"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.984"
-            android:layout_marginTop="24dp"
-            android:layout_below="@+id/money"
-            android:layout_centerHorizontal="true" />
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="86dp"
+        android:layout_height="37dp"
+        android:layout_alignLeft="@+id/textView4"
+        android:layout_alignStart="@+id/textView4"
+        android:layout_alignTop="@+id/money"
+        android:gravity="center|left"
+        android:text="存款金额"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.628" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="60dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="83dp"
+        android:gravity="center|left"
+        android:text="类型"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.727"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/interest"
+        android:layout_toStartOf="@+id/interest" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout3"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="34dp"
+        android:layout_below="@+id/interest"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/button"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="57dp"
             android:background="@drawable/ripple_bg"
             android:text="计算"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/interest_list"
-            app:layout_constraintVertical_bias="0.983"
-            android:layout_below="@+id/interest"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="67dp"
-            android:layout_height="37dp"
-            android:gravity="center"
-            android:text="存款金额"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.628"
-            android:layout_alignTop="@+id/money"
-            android:layout_alignLeft="@+id/textView4"
-            android:layout_alignStart="@+id/textView4" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="60dp"
-            android:layout_height="30dp"
-            android:gravity="center"
-            android:text="类型"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.727"
-            android:layout_marginTop="63dp"
-            android:layout_alignParentTop="true"
-            android:layout_toLeftOf="@+id/interest"
-            android:layout_toStartOf="@+id/interest" />
-<LinearLayout
+            android:layout_margin="16dp"/>
+<TextView
     android:layout_width="match_parent"
-    android:layout_height="246dp"
-    android:layout_below="@+id/button"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true"
-    >
+    android:layout_height="wrap_content"
+    android:text="利息情况"
+    android:layout_margin="8dp"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/interest_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_alignTop="@+id/button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="8dp" />
 
-  <android.support.v7.widget.RecyclerView
-      android:id="@+id/interest_list"
-      android:layout_width="match_parent"
-      android:layout_height="237dp" />
-</LinearLayout>
+    </LinearLayout>
+
 
 
 </RelativeLayout>

@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="72dp"
-        android:background="@color/White" />
+        android:background="@color/holo" />
     <ImageButton
         android:id="@+id/imb2"
         android:layout_width="40dp"
@@ -159,6 +159,17 @@
             android:layout_margin="16dp"
             android:layout_alignParentRight="true"
             />
+
+        <CheckBox
+            android:id="@+id/dayCheck"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/checkBox"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="26dp"
+            android:layout_toLeftOf="@+id/checkBox"
+            android:layout_toStartOf="@+id/checkBox"
+            android:text="每天" />
     </RelativeLayout>
 
     <LinearLayout
@@ -181,6 +192,7 @@
             android:background="@drawable/ripple_bg"
             android:padding="8dp"
             android:text="删除"
+            android:textColor="@color/holo"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
             android:textSize="16sp" />
 
@@ -193,6 +205,7 @@
             android:background="@drawable/ripple_bg"
             android:padding="8dp"
             android:text="修改"
+            android:textColor="@color/holo"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
             android:textSize="16sp" />
 
@@ -205,6 +218,7 @@
             android:background="@drawable/ripple_bg"
             android:gravity="center"
             android:padding="8dp"
+            android:textColor="@color/holo"
             android:text="保存"
             android:textSize="16sp"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>

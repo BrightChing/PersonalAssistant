@@ -54,8 +54,8 @@ public class AnimeActivity extends AppCompatActivity {
     private void startActivity() {
         Intent intent = new Intent(AnimeActivity.this, LoginActivity.class);
         startActivity(intent);
-        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
         finish();
+        overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
     }
 }
 

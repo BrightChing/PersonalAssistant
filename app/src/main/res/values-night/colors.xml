@@ -8,4 +8,5 @@
     <color name="navigation_bar_color">#0a0a0a</color>
     <color name="windowBackground">#5f000000</color>
     <color name="navigationview_bg_color">#000000</color>
+    <color name="holo">#7f7f7f</color>
 </resources>
