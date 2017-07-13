@@ -31,7 +31,7 @@
             android:layout_weight="0.5"
             android:paddingLeft="56dp"
             android:text="@string/day_mode"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <Switch
             android:id="@+id/sw1"
@@ -72,7 +72,7 @@
                 android:layout_weight="0.5"
                 android:paddingLeft="56dp"
                 android:text="@string/about_us"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <ImageView
@@ -120,7 +120,7 @@
                 android:layout_gravity="center"
                 android:paddingLeft="56dp"
                 android:text="帮助"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -139,7 +139,7 @@
                 android:layout_weight="0.5"
                 android:paddingLeft="56dp"
                 android:text="设置加密密码"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

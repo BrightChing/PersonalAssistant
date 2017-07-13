@@ -17,7 +17,17 @@
         android:layout_marginTop="128dp"
         android:layout_marginBottom="16dp"
         android:layout_alignParentLeft="true">
-
+        <ImageView
+            android:id="@+id/content_img"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignLeft="@+id/linearLayout2"
+            android:layout_alignStart="@+id/linearLayout2"
+            android:layout_marginTop="64dp"
+            android:layout_alignRight="@+id/linearLayout2"
+            android:layout_alignEnd="@+id/linearLayout2"
+            android:src="@drawable/nopic"/>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

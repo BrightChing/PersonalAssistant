@@ -27,6 +27,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@null"
+        android:contentDescription="@null"
         android:src="@drawable/ic_action_close" />
 
     <RelativeLayout
@@ -59,7 +60,7 @@
         android:layout_marginLeft="16dp"
         android:text="@string/date_title"
         android:textColor="#212121"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <EditText
         android:id="@+id/etNoteTitle"
@@ -70,7 +71,7 @@
         android:textColor="#212121"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:textSize="16dp"
+        android:textSize="16sp"
        />
 </LinearLayout>
 
@@ -89,7 +90,7 @@
                 android:textColor="#212121"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
-                android:textSize="20dp" />
+                android:textSize="20sp" />
             <TimePicker
                 android:id="@+id/timepicker"
                 android:layout_width="match_parent"
@@ -106,7 +107,7 @@
                 android:layout_height="wrap_content"
                 android:padding="8dp"
                 android:textColor="#212121"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:layout_margin="16dp"
                 />
 
@@ -124,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/postscript"
                 android:textColor="#212121"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"/>
 
@@ -142,7 +143,7 @@
                 android:minLines="4"
                 android:padding="8dp"
                 android:scrollbars="vertical"
-                android:textSize="16dp"
+                android:textSize="16sp"
                 android:background="@drawable/bg_edittext"
                 android:layout_below="@+id/timepicker"
                 android:layout_alignLeft="@+id/timepicker"
@@ -189,7 +190,7 @@
             android:layout_weight="0.5"
             android:background="@drawable/ripple_bg"
             android:padding="8dp"
-            android:text="删除"
+            android:text="@string/sheet_delete"
             android:textColor="@color/holo"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
             android:textSize="16sp" />
@@ -202,7 +203,7 @@
             android:layout_weight="0.5"
             android:background="@drawable/ripple_bg"
             android:padding="8dp"
-            android:text="修改"
+            android:text="@string/sheet_edit"
             android:textColor="@color/holo"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"
             android:textSize="16sp" />

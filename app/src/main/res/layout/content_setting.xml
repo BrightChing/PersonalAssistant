@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0.5"
-            android:textSize="16dp"
+            android:textSize="16sp"
             android:text="@string/day_mode"
             android:paddingLeft="56dp"
             android:layout_gravity="center"
@@ -74,7 +74,7 @@
                 android:layout_weight="0.5"
                 android:paddingLeft="56dp"
                 android:text="@string/about_us"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <ImageView
@@ -127,7 +127,7 @@
                 android:layout_weight="0.5"
                 android:paddingLeft="56dp"
                 android:text="帮助"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 
@@ -148,7 +148,7 @@
                 android:layout_weight="0.5"
                 android:paddingLeft="56dp"
                 android:text="设置加密密码"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
 

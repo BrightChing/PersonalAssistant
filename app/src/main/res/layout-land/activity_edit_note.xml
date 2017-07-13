@@ -9,6 +9,12 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/imb2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
     <View
         android:layout_width="match_parent"
         android:layout_height="72dp"
@@ -22,7 +28,8 @@
         android:src="@drawable/ic_action_close"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@null"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,20 +37,10 @@
         android:background="@color/White" />
 
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/imb2"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
         <RelativeLayout
             android:id="@+id/etNoteLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
+            android:layout_height="wrap_content"
             android:layout_marginTop="32dp">
 
 
@@ -65,7 +62,7 @@
                     android:layout_marginLeft="16dp"
                     android:text="@string/date_title"
                     android:textColor="#212121"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
 
                 <EditText
                     android:id="@+id/etNoteTitle"
@@ -75,7 +72,7 @@
                     android:lines="1"
                     android:textColor="#212121"
                     android:layout_marginLeft="16dp"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_marginRight="16dp"/>
             </LinearLayout>
 
@@ -94,7 +91,7 @@
                     android:textColor="#212121"
                     android:layout_marginLeft="16dp"
                     android:layout_marginTop="16dp"
-                    android:textSize="20dp" />
+                    android:textSize="20sp" />
                 <TimePicker
                     android:id="@+id/timepicker"
                     android:layout_width="match_parent"
@@ -110,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:padding="8dp"
                     android:textColor="#212121"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     android:layout_margin="16dp"/>
 
             </LinearLayout>
@@ -127,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/postscript"
                     android:textColor="#212121"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginLeft="16dp"/>
 
                 <EditText
@@ -147,7 +144,7 @@
                     android:padding="8dp"
                     android:scrollbars="vertical"
                     android:textColor="#212121"
-                    android:textSize="16dp"
+                    android:textSize="16sp"
                     />
             </LinearLayout>
             <CheckBox
@@ -170,7 +167,7 @@
                 android:layout_marginLeft="138dp"
                 android:layout_marginStart="138dp" />
         </RelativeLayout>
-    </ScrollView>
+
 
 
     <LinearLayout
@@ -221,5 +218,5 @@
             android:textSize="16sp"
             style="@style/Base.TextAppearance.AppCompat.Widget.Button.Colored"/>
     </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>

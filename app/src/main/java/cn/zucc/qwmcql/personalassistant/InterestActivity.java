@@ -32,7 +32,7 @@ public class InterestActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_insterest);
+        setContentView(R.layout.activity_interest);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("利息计算");
         setSupportActionBar(toolbar);
