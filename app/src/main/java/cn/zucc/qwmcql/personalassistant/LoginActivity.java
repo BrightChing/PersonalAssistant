@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 
 public class LoginActivity extends AppCompatActivity {
-    Button butttonSign, buttonedit;
+    Button butttonSign, buttonEdit;
     EditText editText, editText1, editText2;
     SharedPreferences.Editor editor;
     SharedPreferences preferences;
@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         butttonSign = (Button) findViewById(R.id.sign_in_button);
-        buttonedit = (Button) findViewById(R.id.editpass);
+        buttonEdit = (Button) findViewById(R.id.editpass);
         editText = (EditText) findViewById(R.id.password2);
         butttonSign.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        buttonedit.setOnClickListener(new View.OnClickListener() {
+        buttonEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LayoutInflater inflater = getLayoutInflater();
